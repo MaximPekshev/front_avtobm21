@@ -7,13 +7,13 @@ export default {
     },
     getters: {
         categories_list: state => {
-            return state.categories_list;
+            return state.categories_list
         },
         getCategoryById: state => id => {
             return state.categories_list.find(category => category.id === id);
         },
         categories_list_loading: state => {
-            return state.categories_list_loading;
+            return state.categories_list_loading
         }
     },
     mutations: {

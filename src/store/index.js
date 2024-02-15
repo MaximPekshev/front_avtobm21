@@ -3,6 +3,7 @@ import goods_list from './modules/goods_list'
 import good from './modules/good'
 import user from './modules/user'
 import categories_list from './modules/categories_list'
+import wishlist from './modules/wishlist'
 
 export default createStore({
   state: {
@@ -17,6 +18,7 @@ export default createStore({
     goods_list,
     good,
     user,
-    categories_list
+    categories_list,
+    wishlist
   }
 })

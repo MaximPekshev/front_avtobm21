@@ -59,17 +59,17 @@ const routes = [
     ]
   },
   {
-    path: '/contact',
+    path: '/contact/',
     name: 'contact',
     component: ContactView
   },
   {
-    path: '/compare',
+    path: '/compare/',
     name: 'compare',
     component: CompareView
   },
   {
-    path: '/wishlist',
+    path: '/wishlist/',
     name: 'wishlist',
     component: WishlistView
   }

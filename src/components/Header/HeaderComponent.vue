@@ -19,10 +19,10 @@
                   </li>
                   <li><router-link to="/contact"><i class="fa-regular fa-location-dot"></i></router-link></li>
                   <li><router-link to="/compare"><i class="fa-solid fa-arrows-rotate"></i></router-link></li>
-                  <li>
-                    <router-link to="/wishlist">
+                  <li v-if="user">
+                    <router-link :to="{ name: 'wishlist'}">
                       <i class="fa-regular fa-heart"></i>
-                      <small class="wishlist_counter">5</small>
+                      <small v-if="wishlistQty > 0" class="wishlist_counter">{{ wishlistQty }}</small>
                     </router-link>
                   </li>
                   <li v-if="user"><router-link :to="{ name: 'userAccount'}"><i class="fa-regular fa-user"></i></router-link></li>
@@ -82,7 +82,10 @@ export default {
       },
       user () {
         return this.$store.getters.user
-      }
+      },
+      wishlistQty () {
+        return this.$store.getters.wishlistQty
+      },
     },
     mounted() {
       this.checkTheCookiesAuthToken()
@@ -94,7 +97,15 @@ export default {
           this.$store.dispatch('setUserToken', authToken)
           this.$store.dispatch('loadUserInfo', authToken)
         }
-      }
+      },
+      loadWishlist () {
+        let authToken = this.cookies.get("avtobm21_token") 
+        if (authToken) {
+          this.$store.dispatch('loadWishlist', authToken)
+        } else {
+          this.$store.dispatch('loadWishlist', this.userToken)
+        }
+      },
     },
     watch: {
       userToken: {
@@ -108,6 +119,14 @@ export default {
             this.$store.dispatch('cleanUserInfo', {})
           }
         }
+      },
+      '$route': {
+        immediate: true,
+        handler() {
+          if (this.userToken != '') {
+            this.loadWishlist()
+          }
+        },
       }
     }
 }

@@ -1,4 +1,5 @@
 <template>
+    <PreloaderComponent v-if="goods_list_loading" />
     <div class="tab-content">
         <div class="tab-pane fade show active" id="home" role="tabpanel">
             <div class="product_wrap" v-if="goods_list_loading">
@@ -31,6 +32,7 @@
 import GoodComponent from '@/components/Catalog/GoodComponent.vue'
 import PaginationComponent from '@/components/Category/PaginationComponent.vue'
 import ContentLoadingDemo from '@/components/Catalog/ContentLoadingDemo.vue'
+import PreloaderComponent from '@/components/PreloaderComponent.vue'
 
 export default {
     name: 'ContentComponent',
@@ -38,6 +40,7 @@ export default {
         GoodComponent,
         PaginationComponent,
         ContentLoadingDemo,
+        PreloaderComponent
     },
     computed: {
         goodsQty: function() {

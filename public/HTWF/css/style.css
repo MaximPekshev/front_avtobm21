@@ -657,13 +657,14 @@ hr {
 ================================================== */
 /* 2.8 - Preloader Style - start
 ================================================== */
-#preloader {
+.preloader {
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: 10000;
   position: fixed;
+  opacity: 0.4;
   overflow: visible;
   background: #ffffff url("../images/preloader.svg") no-repeat center center;
 }
@@ -3279,6 +3280,12 @@ hr {
           justify-content: center;
   border: 1px solid #ededed;
   text-transform: uppercase;
+  cursor: pointer;
+}
+.wishlist-ckecked {
+  color: #ffffff !important;
+  border-color: #2742fd !important;
+  background-color: #2742fd !important;
 }
 .product_layout1 .item_btns_group a:hover {
   color: #ffffff;
@@ -4424,6 +4431,7 @@ hr {
           justify-content: center;
   border: 1px solid #ededed;
   text-transform: uppercase;
+  cursor: pointer;
 }
 .default_btns_group a:hover {
   color: #ffffff;
@@ -4925,6 +4933,9 @@ hr {
 }
 .cart_table .btn {
   padding: 14px 24px 12px;
+}
+.btn i {
+  font-size: 1.2rem;
 }
 .cart_table .remove_btn {
   font-size: 18px;

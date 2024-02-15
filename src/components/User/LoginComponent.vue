@@ -100,8 +100,12 @@ export default {
                     this.loading = true
                     axios
                         .get(url)
-                        .then(() => {
-                            this.pinCodeSended = true
+                        .then((response) => {
+                            if (!response.data.data) {
+                                this.pinCodeSended = true
+                            } else {
+                                this.message = 'Пользователь с таким email не найден!'
+                            }
                         })
                         .catch(error => {
                             console.log(error);

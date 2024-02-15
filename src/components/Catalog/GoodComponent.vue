@@ -21,12 +21,12 @@
             </ul>
             <div class="item_price">
             <span>{{ price }}</span>
-            <!-- <del>$720.00</del> -->
             </div>
             <ul class="item_btns_group ul_li">
             <li><a class="addtocart_btn" href="#">В корзину</a></li>
             <li><a href="#"><i class="fa-solid fa-arrows-rotate"></i></a></li>
-            <li><a href="#"><i class="fas fa-heart"></i></a></li>
+            <li v-if="itemInWishlist(id)"><a class="wishlist-ckecked" @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
+            <li v-else><a @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
             </ul>
         </div>
     </div>
@@ -48,6 +48,25 @@ export default {
             name: this.goodInfo.name,
             art: this.goodInfo.art,
             price: this.goodInfo.price,
+        }
+    },
+    computed: {
+        userToken () {
+            return this.$store.getters.user_token
+        }, 
+    },
+    methods: {
+        itemInWishlist (id) {
+            return this.$store.getters.wishlistItemById(id)
+        },
+        addToWishlist () {
+            if (this.userToken != '') {
+                if (this.itemInWishlist(this.goodInfo.id)) {
+                    this.$store.dispatch('addDelWishlistItem', {good_id: this.goodInfo.id, authToken: this.userToken, action: 'del'})
+                } else {
+                    this.$store.dispatch('addDelWishlistItem', {good_id: this.goodInfo.id, authToken: this.userToken, action: 'add'})
+                }
+            }
         }
     }
 }

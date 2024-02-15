@@ -1,5 +1,5 @@
 <template>
-    <div id="preloader"></div>
+    <div class="preloader"></div>
 </template>
 
 <script>

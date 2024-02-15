@@ -1,5 +1,6 @@
 <template>
-<div class="container">
+<PreloaderComponent v-if="goodInfoLoading" />
+<div class="container" v-else>
     <div class="row">
         <div class="col col-lg-6">
             <div class="product_details_image">
@@ -10,7 +11,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-6">
         <div class="product_details_content">
             <h2 class="item_title">{{ good.name }}</h2>
@@ -63,7 +63,8 @@
             <ul class="default_btns_group ul_li">
                 <li v-if="good.balance > 0"><a class="addtocart_btn" href="#">В корзину</a></li>
                 <li><a href="#"><i class="fa-solid fa-arrows-rotate"></i></a></li>
-                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                <li v-if="itemInWishlist(good.id)"><a class="wishlist-ckecked" @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
+                <li v-else><a @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
             </ul>
 
             <ul class="default_share_links ul_li">
@@ -100,6 +101,8 @@
 <script>
 
 import image from '@/assets/images/product_details_img_1.webp'
+import PreloaderComponent from '@/components/PreloaderComponent.vue'
+
 
 export default {
     name: 'GoodContentComponent',
@@ -110,6 +113,7 @@ export default {
         }
     },
     components: {
+        PreloaderComponent,
     },
     computed: {
         good () {
@@ -120,6 +124,12 @@ export default {
         },
         balance () {
             return Math.floor(this.good.balance)
+        },
+        userToken () {
+            return this.$store.getters.user_token
+        }, 
+        goodInfoLoading () {
+            return this.$store.getters.good_info_loading
         }
     },
     methods: {
@@ -144,6 +154,18 @@ export default {
             if (this.qty > 1) {
                 this.qty --
             }
+        },
+        itemInWishlist (id) {
+            return this.$store.getters.wishlistItemById(id)
+        },
+        addToWishlist () {
+            if (this.userToken != '') {
+                if (this.itemInWishlist(this.good.id)) {
+                    this.$store.dispatch('addDelWishlistItem', {good_id: this.good.id, authToken: this.userToken, action: 'del'})
+                } else {
+                    this.$store.dispatch('addDelWishlistItem', {good_id: this.good.id, authToken: this.userToken, action: 'add'})
+                }
+            }    
         }
     },
     watch: {
@@ -158,7 +180,7 @@ export default {
             handler() {
                 this.setPageTitle(this.good.name)
             }
-        },
+        }
     },
 }
 </script>
