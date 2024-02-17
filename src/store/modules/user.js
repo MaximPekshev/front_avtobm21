@@ -52,12 +52,15 @@ export default {
                     commit('setUserToken', "")
                 }
             }).catch(function(error){
-                console.log(error);
+                if (error.status === 401) {
+                    commit('setUserToken', "")
+                }
+                console.log(error)
             }).finally(() => {
                 commit('userInfoLoadingSwitch', false)
             })
         },
-        cleanUserInfo({commit}, payload) {
+        clearUserInfo({commit}, payload) {
             commit('loadUserInfo', payload)
         }
     }

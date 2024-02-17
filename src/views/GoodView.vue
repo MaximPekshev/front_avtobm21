@@ -1,12 +1,15 @@
 <template>
+    <!-- <SideBarCartComponent /> -->
     <div class="body_wrap">
         <BackToTop />
         <!-- <PreloaderComponent /> -->
         <HeaderComponent />
-        <BreadCrumbs />
-        <section class="product_details section_space pb-0">
-            <GoodContentComponent />
-        </section>
+        <main>
+            <BreadCrumbs />
+            <section class="product_details section_space pb-0">
+                <GoodContentComponent />
+            </section>
+        </main>
         <FooterComponent />
   </div>
 </template>
@@ -18,6 +21,7 @@ import BackToTop from '@/components/BackToTop.vue'
 import FooterComponent from '@/components/Footer/FooterComponent.vue'
 import BreadCrumbs from '@/components/Good/GoodBreadCrumbs.vue'
 import GoodContentComponent from '@/components/Good/GoodContentComponent.vue'
+// import SideBarCartComponent from '@/components/SideBarCartComponent.vue'
 
 export default {
     name: 'GoodView',
@@ -28,11 +32,7 @@ export default {
         FooterComponent,
         BreadCrumbs,
         GoodContentComponent,
-    },
-    // mounted() {
-    //     this.getGoodInfo()
-    // },
-    methods: {
+        // SideBarCartComponent
     }
 }
 </script>

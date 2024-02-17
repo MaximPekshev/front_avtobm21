@@ -1,9 +1,12 @@
 <template>
+    <!-- <SideBarCartComponent /> -->
     <div class="body_wrap">
         <BackToTop />
         <HeaderComponent />
-        <DefaultBreadCrumbs pageName="Авторизация" />
-        <LoginComponent />
+        <main>
+          <DefaultBreadCrumbs pageName="Авторизация" />
+          <LoginComponent />
+        </main>
         <FooterComponent />
     </div>
 </template>
@@ -14,6 +17,7 @@ import BackToTop from '@/components/BackToTop.vue'
 import FooterComponent from '@/components/Footer/FooterComponent.vue'
 import DefaultBreadCrumbs from '@/components/DefaultBreadCrumbs.vue'
 import LoginComponent from '@/components/User/LoginComponent.vue'
+// import SideBarCartComponent from '@/components/SideBarCartComponent.vue'
 
 export default {
   name: 'UserLoginView',
@@ -22,7 +26,8 @@ export default {
     BackToTop,
     FooterComponent,
     DefaultBreadCrumbs,
-    LoginComponent
+    LoginComponent,
+    // SideBarCartComponent
   },
   computed: {
     userInfo () {

@@ -1,6 +1,10 @@
 <template>
+  <!-- <SideBarCartComponent /> -->
   <div class="body_wrap">
     <BackToTop />
+    <main>
+      
+    </main>
     <!-- <PreloaderComponent /> -->
     <HeaderComponent />
     <FooterComponent />
@@ -14,6 +18,7 @@
 import HeaderComponent from '@/components/Header/HeaderComponent.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import FooterComponent from '@/components/Footer/FooterComponent.vue'
+// import SideBarCartComponent from '@/components/SideBarCartComponent.vue'
 
 
 export default {
@@ -26,12 +31,13 @@ export default {
     BackToTop,
     // PreloaderComponent,
     FooterComponent,
+    // SideBarCartComponent
   },
   watch: {
       $route: {
           immediate: true,
           handler() {
-              document.title = 'Home page'
+              document.title = 'Главная'
           }
       },
   }

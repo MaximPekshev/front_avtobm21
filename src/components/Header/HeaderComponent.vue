@@ -53,7 +53,7 @@
    
  <script>
 
-import { useCookies } from "vue3-cookies";
+import { useCookies } from "vue3-cookies"
 import HeaderTop from '@/components/Header/HeaderTop.vue'
 import LogoComponent from '@/components/Header/LogoComponent.vue'
 import MainMenuComponent from '@/components/Header/MainMenuComponent.vue'
@@ -89,6 +89,7 @@ export default {
     },
     mounted() {
       this.checkTheCookiesAuthToken()
+      this.loadWishlist()
     },
     methods: {
       checkTheCookiesAuthToken () {

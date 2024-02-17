@@ -61,7 +61,7 @@
             </div>
 
             <ul class="default_btns_group ul_li">
-                <li v-if="good.balance > 0"><a class="addtocart_btn" href="#">В корзину</a></li>
+                <li v-if="good.balance > 0"><a @click="addToCart" class="addtocart_btn" href="#">В корзину</a></li>
                 <li><a href="#"><i class="fa-solid fa-arrows-rotate"></i></a></li>
                 <li v-if="itemInWishlist(good.id)"><a class="wishlist-ckecked" @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
                 <li v-else><a @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
@@ -166,7 +166,18 @@ export default {
                     this.$store.dispatch('addDelWishlistItem', {good_id: this.good.id, authToken: this.userToken, action: 'add'})
                 }
             }    
-        }
+        },
+        addToCart () {
+            if (this.userToken != '') {
+                this.$store.dispatch('addDelCartItem', 
+                {
+                    good_id: this.good.id,
+                    authToken: this.userToken,
+                    quantity: this.qty,
+                    action: 'add'
+                })
+            }    
+        },
     },
     watch: {
         '$route.query.id': {

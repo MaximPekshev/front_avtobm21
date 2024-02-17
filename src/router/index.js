@@ -8,6 +8,7 @@ import GoodView from '../views/GoodView.vue'
 import CategoryView from '../views/CategoryView.vue'
 import UserLoginView from '../views/User/UserLoginView.vue'
 import UserAccountView from '../views/User/UserAccountView.vue'
+import CartView from '../views/User/CartView.vue'
 
 const routes = [
   {
@@ -35,6 +36,16 @@ const routes = [
         path: 'account/',
         name: 'userAccount',
         component: UserAccountView
+      },
+      {
+        path: 'wishlist/',
+        name: 'wishlist',
+        component: WishlistView
+      },
+      {
+        path: 'cart/',
+        name: 'cart',
+        component: CartView
       },
     ]
   },
@@ -68,11 +79,6 @@ const routes = [
     name: 'compare',
     component: CompareView
   },
-  {
-    path: '/wishlist/',
-    name: 'wishlist',
-    component: WishlistView
-  }
 ]
 
 const router = createRouter({

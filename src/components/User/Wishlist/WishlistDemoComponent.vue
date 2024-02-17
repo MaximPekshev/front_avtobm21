@@ -27,10 +27,10 @@
 
 export default {
     name: 'WishlistItemComponent',
-    props: ['goodInfo'],
+    props: ['demoCount'],
     data () {
         return {
-            demoContentCount: 6,
+            demoContentCount: this.demoCount,
         }
     }
 }

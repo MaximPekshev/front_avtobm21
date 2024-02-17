@@ -11,7 +11,7 @@
         <span class="price_text text-danger" v-else>Нет в наличии</span>
     </td>
     <td class="text-center">
-        <a href="#!" class="btn btn_gray">
+        <a @click="addToCart"  class="btn btn_gray">
             <i class="fa fa-cart-plus" :class="{ 'text-secondary': balance == 0 }"></i>
         </a>
     </td>
@@ -46,8 +46,19 @@ export default {
     },
     methods: {
         delFromWishlist () {
-            this.$store.dispatch('addDelWishlistItem', {good_id: this.goodInfo.id, authToken: this.userToken, action: 'del'})
-        }
+            this.$store.dispatch('addDelWishlistItem', {good_id: this.id, authToken: this.userToken, action: 'del'})
+        },
+        addToCart () {
+            if (this.userToken != '' && this.balance > 0) {
+                this.$store.dispatch('addDelCartItem', 
+                {
+                    good_id: this.id,
+                    authToken: this.userToken,
+                    quantity: 1,
+                    action: 'add'
+                })
+            }    
+        },
     }
 }
 </script>

@@ -77,6 +77,9 @@ export default {
             }).finally(() => {
                 commit('wishlistLoadingSwitch', false)
             })
+        },
+        clearWishlist({commit}, payload) {
+            commit('loadWishlist', payload)
         }
     }
 }
