@@ -42,7 +42,13 @@ export default {
           this.$router.push({ name : 'userAccount' })
         } 
       }
-    }
+    },
+    $route: {
+        immediate: true,
+        handler() {
+            document.title = 'Авторизация'
+        }
+    },
   } 
 }
 </script>

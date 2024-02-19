@@ -4,6 +4,7 @@ design
 *.log
 packages/test
 dist
+dist.zip
 temp
 .vuerc
 .version

@@ -80,6 +80,12 @@ export default {
       this.$store.dispatch('clearWishlist', {})
       this.$router.push({ name: 'userLogin' })
     }
-  }
+  },
+  $route: {
+      immediate: true,
+      handler() {
+          document.title = 'Личный кабинет'
+      }
+  },
 }
 </script>
