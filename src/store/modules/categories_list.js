@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import {backendPath} from "@/main.js"
 
 export default {
     state: {
@@ -26,7 +27,7 @@ export default {
     },
     actions: {
         async loadCategoriesList ({commit}) {
-            let url = `https://back.avtobm21.ru/api/v1/catalog/category/`
+            let url = `${backendPath}/api/v1/catalog/category/`
             commit('categoriesListLoadingSwitch', true)
             await Axios.get(url)
                 .then((response) => {

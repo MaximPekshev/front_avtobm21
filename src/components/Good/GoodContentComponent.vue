@@ -6,7 +6,8 @@
             <div class="product_details_image">
                 <div class="details_image_carousel">
                     <div class="slider_item">
-                        <img :src="image" :alt="good.name">
+                        <img v-if="mainImage" :src="mainImage" :alt="good.name">
+                        <img v-else :src="product_preview" :alt="good.name">
                     </div>
                 </div>
             </div>
@@ -61,8 +62,16 @@
             </div>
 
             <ul class="default_btns_group ul_li">
-                <li v-if="good.balance > 0"><a @click="addToCart" class="addtocart_btn" href="#">В корзину</a></li>
-                <li><a href="#"><i class="fa-solid fa-arrows-rotate"></i></a></li>
+                <li v-if="good.balance > 0">
+                    <a v-if="loading" @click="addToCart" class="addtocart_btn">
+                        <div class="spinner-border spinner-border-sm text-primary" role="status">
+                        </div>
+                    </a>
+                    <a v-else @click="addToCart" class="addtocart_btn">
+                        В корзину
+                    </a>
+                </li>
+                <!-- <li><a href="#"><i class="fa-solid fa-arrows-rotate"></i></a></li> -->
                 <li v-if="itemInWishlist(good.id)"><a class="wishlist-ckecked" @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
                 <li v-else><a @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
             </ul>
@@ -99,8 +108,8 @@
 </template>
 
 <script>
-
-import image from '@/assets/images/product_details_img_1.webp'
+import {backendPath} from "@/main.js"
+import product_preview from '@/assets/images/product_img_12.png'
 import PreloaderComponent from '@/components/PreloaderComponent.vue'
 
 
@@ -108,8 +117,9 @@ export default {
     name: 'GoodContentComponent',
     data () {
         return {
-            image,
+            product_preview,
             qty: 1,
+            loading: false,
         }
     },
     components: {
@@ -130,12 +140,16 @@ export default {
         }, 
         goodInfoLoading () {
             return this.$store.getters.good_info_loading
-        }
+        },
+        mainImage () {
+            let path = ''
+            if (this.good.images.length > 0) {
+                path = backendPath + this.good.images[0].image.url
+            }
+            return path
+        },
     },
     methods: {
-        getGoodInfoLoadingStatus() {
-            return this.$store.getters.good_info_loading
-        },
         setPageTitle(payload) {
             document.title = payload
         },
@@ -168,15 +182,19 @@ export default {
             }    
         },
         addToCart () {
-            if (this.userToken != '') {
-                this.$store.dispatch('addDelCartItem', 
-                {
-                    good_id: this.good.id,
-                    authToken: this.userToken,
-                    quantity: this.qty,
-                    action: 'add'
-                })
-            }    
+            this.loading = true
+            setTimeout(() => {
+                if (this.userToken != '') {
+                    this.$store.dispatch('addDelCartItem', 
+                    {
+                        good_id: this.good.id,
+                        authToken: this.userToken,
+                        quantity: this.qty,
+                        action: 'add'
+                    })
+                }
+                this.loading = false
+            }, 50)    
         },
     },
     watch: {

@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import {backendPath} from "@/main.js"
 
 export default {
     state: {
@@ -42,9 +43,9 @@ export default {
             commit('wishlistLoadingSwitch', true)
             let url = ''
             if (action == 'add') {
-                url = `https://back.avtobm21.ru/api/v1/wish/add/?good_id=${good_id}`
+                url = `${backendPath}/api/v1/wish/add/?good_id=${good_id}`
             } else {
-                url = `https://back.avtobm21.ru/api/v1/wish/delete/?good_id=${good_id}`
+                url = `${backendPath}/api/v1/wish/delete/?good_id=${good_id}`
             }
             await Axios({
                 method: 'get',
@@ -63,7 +64,7 @@ export default {
         },
         async loadWishlist({commit}, authToken) {
             commit('wishlistLoadingSwitch', true)
-            let url = `https://back.avtobm21.ru/api/v1/wish/`
+            let url = `${backendPath}/api/v1/wish/`
             await Axios({
                 method: 'get',
                 headers: {

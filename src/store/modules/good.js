@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import {backendPath} from "@/main.js"
 
 export default {
     state: {
@@ -26,7 +27,7 @@ export default {
     },
     actions: {
         async loadGoodInfo ({commit}, id) {
-            let url = `https://back.avtobm21.ru/api/v1/catalog/good/?id=${id}`
+            let url = `${backendPath}/api/v1/catalog/good/?id=${id}`
             commit('goodLoadingSwitch', true)
             await Axios.get(url)
                 .then((response) => {

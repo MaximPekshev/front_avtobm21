@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import {backendPath} from "@/main.js"
 
 export default {
     state: {
@@ -38,7 +39,7 @@ export default {
         },
         loadUserInfo ({commit}, authToken) {
             commit('userInfoLoadingSwitch', true)
-            let url = `https://back.avtobm21.ru/auth/get-user-info/`
+            let url = `${backendPath}/auth/get-user-info/`
             Axios({
                 method: 'get',
                 headers: {

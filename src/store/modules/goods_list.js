@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import {backendPath} from "@/main.js"
 
 export default {
     state: {
@@ -92,7 +93,7 @@ export default {
             if (params.q) {
                 q = params.q
             }
-            let url = `https://back.avtobm21.ru/api/v1/catalog/good`
+            let url = `${backendPath}/api/v1/catalog/good`
             if (q) {
                 url = url + `/?search=${q}&page=${page}&count=${goodsQtyOnPage}`
             } else {
@@ -159,7 +160,7 @@ export default {
                 goodsQtyOnPage = params.goodsQtyOnPage
             }
             commit('setGoodsOnPageQty', goodsQtyOnPage)
-            let url = `https://back.avtobm21.ru/api/v1/catalog/good`
+            let url = `${backendPath}/api/v1/catalog/good`
             url = url + `/?category_id=${params.category_id}&page=${page}&count=${goodsQtyOnPage}`
             commit('goodsLoadingSwitch', true)
             await Axios.get(url)

@@ -60,6 +60,7 @@
 
 <script>
 import axios from 'axios'
+import {backendPath} from "@/main.js"
 
 export default {
     name: "LoginComponent",
@@ -96,7 +97,7 @@ export default {
             this.authMessage = ''
             if (this.isValidEmail) {
                 if (!this.pinCodeSended) {
-                    let url = `https://back.avtobm21.ru/auth/get-pin/?recipient=${this.inputEmail}`
+                    let url = `${backendPath}/auth/get-pin/?recipient=${this.inputEmail}`
                     this.loading = true
                     axios
                         .get(url)
@@ -121,7 +122,7 @@ export default {
             this.authMessage = ''
             if (this.isValidEmail) {
                 if (this.inputPinCode.length == 6) {
-                    let url = `https://back.avtobm21.ru/auth/get-token/`
+                    let url = `${backendPath}/auth/get-token/`
                     let data = {
                         "username": this.inputEmail,
                         "pincode": this.inputPinCode

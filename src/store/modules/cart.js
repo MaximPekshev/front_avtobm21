@@ -1,4 +1,5 @@
 import Axios from 'axios'
+import {backendPath} from "@/main.js"
 
 export default {
     state: {
@@ -43,9 +44,9 @@ export default {
             commit('cartLoadingSwitch', true)
             let url = ''
             if (action == 'add') {
-                url = `https://back.avtobm21.ru/api/v1/cart/add/`
+                url = `${backendPath}/api/v1/cart/add/`
             } else {
-                url = `https://back.avtobm21.ru/api/v1/cart/delete/`
+                url = `${backendPath}/api/v1/cart/delete/`
             }
             let data = {
                 "data" : [
@@ -55,7 +56,6 @@ export default {
                     }
                 ]
             }
-            console.log(data)
             await Axios({
                 method: 'post',
                 headers: {
@@ -64,7 +64,6 @@ export default {
                 url: url,
                 data: data,
             }).then(response => {
-                console.log(response)
                 commit('loadCartData', response.data.data)
             }).catch(error => {
                 console.log(error)
@@ -74,7 +73,7 @@ export default {
         },
         async loadCart({commit}, authToken) {
             commit('cartLoadingSwitch', true)
-            let url = `https://back.avtobm21.ru/api/v1/cart/`
+            let url = `${backendPath}/api/v1/cart/`
             await Axios({
                 method: 'get',
                 headers: {

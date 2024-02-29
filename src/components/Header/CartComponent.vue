@@ -34,7 +34,7 @@ export default {
             let authToken = this.cookies.get("avtobm21_token") 
             if (authToken) {
                 this.$store.dispatch('loadCart', authToken)
-            } else {
+            } else if (this.userToken) {
                 this.$store.dispatch('loadCart', this.userToken)
             }
         }
@@ -43,7 +43,7 @@ export default {
       '$route': {
         immediate: true,
         handler() {
-          if (this.userToken != '') {
+          if (this.cookies.get("avtobm21_token")) {
             this.loadCart()
           }
         },

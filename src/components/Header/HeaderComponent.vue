@@ -103,7 +103,7 @@ export default {
         let authToken = this.cookies.get("avtobm21_token") 
         if (authToken) {
           this.$store.dispatch('loadWishlist', authToken)
-        } else {
+        } else if (this.userToken) {
           this.$store.dispatch('loadWishlist', this.userToken)
         }
       },
@@ -124,7 +124,7 @@ export default {
       '$route': {
         immediate: true,
         handler() {
-          if (this.userToken != '') {
+          if (this.cookies.get("avtobm21_token")) {
             this.loadWishlist()
           }
         },

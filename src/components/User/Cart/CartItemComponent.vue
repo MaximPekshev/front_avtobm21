@@ -1,7 +1,8 @@
 <template>
     <td>
         <div class="cart_product">
-        <img :src="product_img_12" alt="Getyootech - Gadgets Ecommerce Site Template">
+        <img v-if="mainImage" :src="mainImage" alt="{{ name }}">
+        <img v-else :src="product_preview" alt="{{ name }}">
         <h3><router-link :to="{ name: 'good', params: { id: id }}">{{ name }}</router-link></h3>
         </div>
     </td>
@@ -24,20 +25,20 @@
 </template>
 
 <script>
-
-import product_img_12 from '@/assets/images/product_img_12.webp'
+import {backendPath} from "@/main.js"
+import product_preview from '@/assets/images/product_img_12.png'
 
 export default {
     name: 'CartItemComponent',
     props: ['goodInfo', 'quantity'],
     data () {
         return {
-            product_img_12,
+            product_preview,
             id: this.goodInfo.id,
             name: this.goodInfo.name,
             price: this.goodInfo.price,
             balance: this.goodInfo.balance,
-            qty: Math.floor(this.quantity)
+            qty: (this.goodInfo.balance > 0) ? Math.floor(this.quantity) : 0,
         }
     },
     computed: {
@@ -46,7 +47,14 @@ export default {
         }, 
         amount () {
             return (this.goodInfo.price*this.qty).toFixed(2)
-        }
+        },
+        mainImage () {
+            let path = ''
+            if (this.goodInfo.images.length > 0) {
+                path = backendPath + this.goodInfo.images[0].image.url
+            }
+            return path
+        },
     },
     methods: {
         delFromCart () {

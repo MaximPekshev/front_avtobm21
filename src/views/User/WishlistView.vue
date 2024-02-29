@@ -57,7 +57,6 @@ import FooterComponent from '@/components/Footer/FooterComponent.vue'
 import DefaultBreadCrumbs from '@/components/DefaultBreadCrumbs.vue'
 import WishlistItemComponent from '@/components/User/Wishlist/WishlistItemComponent.vue'
 import WishlistDemoComponent from '@/components/User/Wishlist/WishlistDemoComponent.vue'
-import product_img_11 from '@/assets/images/product_img_12.webp'
 // import SideBarCartComponent from '@/components/SideBarCartComponent.vue'
 
 export default {
@@ -71,11 +70,6 @@ export default {
     WishlistDemoComponent,
     PreloaderComponent,
     // SideBarCartComponent
-  },
-  data () {
-      return {
-        product_img_11,
-      }
   },
   computed: {
     wishlist () {
