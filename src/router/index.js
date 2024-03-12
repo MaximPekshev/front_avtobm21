@@ -9,6 +9,8 @@ import CategoryView from '../views/CategoryView.vue'
 import UserLoginView from '../views/User/UserLoginView.vue'
 import UserAccountView from '../views/User/UserAccountView.vue'
 import CartView from '../views/User/CartView.vue'
+import CheckoutView from '../views/User/CheckoutView.vue'
+import OrderListView from '../views/User/OrderListView.vue'
 
 const routes = [
   {
@@ -46,6 +48,16 @@ const routes = [
         path: 'cart/',
         name: 'cart',
         component: CartView
+      },
+      {
+        path: 'checkout/',
+        name: 'checkout',
+        component: CheckoutView
+      },
+      {
+        path: 'order-list/',
+        name: 'userOrderList',
+        component: OrderListView
       },
     ]
   },

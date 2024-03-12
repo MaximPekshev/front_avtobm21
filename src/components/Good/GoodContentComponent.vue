@@ -50,7 +50,7 @@
                             <i class="fal fa-minus"></i>
                         </button>
                             <input readonly class="input_number" type="text" :value="qty">
-                        <button @click="increaseQty" type="button" class="input_number_increment">
+                        <button :class="{ 'disabled_button' : !canIncrease }" @click="increaseQty" type="button">
                             <i class="fal fa-plus"></i>
                         </button>
                     </div>
@@ -62,12 +62,12 @@
             </div>
 
             <ul class="default_btns_group ul_li">
-                <li v-if="good.balance > 0">
-                    <a v-if="loading" @click="addToCart" class="addtocart_btn">
+                <li>
+                    <a v-if="loading" class="addtocart_btn">
                         <div class="spinner-border spinner-border-sm text-primary" role="status">
                         </div>
                     </a>
-                    <a v-else @click="addToCart" class="addtocart_btn">
+                    <a v-else @click="addToCart" :class="{'disabled_button' : outOfStock,  'addtocart_btn' : !outOfStock}" >
                         В корзину
                     </a>
                 </li>
@@ -148,6 +148,27 @@ export default {
             }
             return path
         },
+        canIncrease () {
+            if (this.good.balance <= (this.qty + Number(this.qtyInCart))) {
+                return false
+            }
+            return true
+        },
+        qtyInCart () {
+            let cartItemById = this.$store.getters.cartItemById(this.good.id)
+            let qtyInCart = 0
+            if (cartItemById) {
+                qtyInCart = cartItemById.quantity
+            }
+            return qtyInCart
+        },
+        outOfStock () {
+            let outOfStock = false
+            if (!(this.userToken != '' && this.balance > 0 && (Number(this.qtyInCart) + this.qty) <= this.balance)) {
+                outOfStock = true
+            }
+            return outOfStock
+        }
     },
     methods: {
         setPageTitle(payload) {
@@ -160,8 +181,10 @@ export default {
             return this.$store.getters.good
         },
         increaseQty() {
-            if (this.qty < this.balance) {
-                this.qty ++
+            if (this.canIncrease) {
+                if (this.qty < this.balance) {
+                    this.qty ++
+                }
             }
         },
         decreaseQty() {
@@ -182,9 +205,9 @@ export default {
             }    
         },
         addToCart () {
-            this.loading = true
-            setTimeout(() => {
-                if (this.userToken != '') {
+            if (!this.outOfStock) {
+                this.loading = true
+                setTimeout(() => {
                     this.$store.dispatch('addDelCartItem', 
                     {
                         good_id: this.good.id,
@@ -192,9 +215,9 @@ export default {
                         quantity: this.qty,
                         action: 'add'
                     })
-                }
-                this.loading = false
-            }, 50)    
+                    this.loading = false
+                }, 50)    
+            }
         },
     },
     watch: {

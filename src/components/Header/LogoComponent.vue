@@ -7,7 +7,7 @@
 </template>
 <script>
 
-import mainLogo from '@/assets/images/logo/site_logo.svg';
+import mainLogo from '@/assets/images/logo/main_logo.png';
 
 export default {
     name: 'LogoComponent',

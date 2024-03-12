@@ -90,6 +90,20 @@ export default {
         },
         clearCart({commit}, payload) {
             commit('loadCartData', payload)
+        },
+        async deleteAllItems({commit}, authToken) {
+            let url = `${backendPath}/api/v1/cart/clear/`
+            await Axios({
+                method: 'get',
+                headers: {
+                    "Authorization": `Token ${authToken}`,
+                },
+                url: url,
+            }).then(() => {
+                commit('loadCartData', {})
+            }).catch(error => {
+                console.log(error)
+            })
         }
     }
 }

@@ -14,7 +14,10 @@
                 <i class="fal fa-minus"></i>
                 </button>
                 <input class="input_number" type="text" :value="qty" readonly>
-                <button @click="increaseQty" type="button" class="input_number_increment">
+                <button v-if="canIncrease" @click="increaseQty" type="button" class="">
+                <i class="fal fa-plus"></i>
+                </button>
+                <button v-else type="button" class="disabled_button">
                 <i class="fal fa-plus"></i>
                 </button>
             </div>
@@ -55,6 +58,12 @@ export default {
             }
             return path
         },
+        canIncrease () {
+            if (this.balance == this.quantity) {
+                return false
+            }
+            return true
+        }
     },
     methods: {
         delFromCart () {

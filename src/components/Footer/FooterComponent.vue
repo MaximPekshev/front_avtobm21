@@ -7,10 +7,10 @@
             <FooterAboutComponent />
           </div>
           <div class="col col-lg-2 col-md-3 col-sm-6">
-            <QuickLinksComponent />
+            <!-- <QuickLinksComponent /> -->
           </div>
           <div class="col col-lg-2 col-md-3 col-sm-6">
-            <CustomAreaComponent />
+            <!-- <CustomAreaComponent /> -->
           </div>
           <div class="col col-lg-4 col-md-6 col-sm-6">
             <ContactInfoComponent />
@@ -25,8 +25,8 @@
  <script>
 
 import FooterAboutComponent from '@/components/Footer/FooterAboutComponent.vue'
-import QuickLinksComponent from '@/components/Footer/QuickLinksComponent.vue'
-import CustomAreaComponent from '@/components/Footer/CustomAreaComponent.vue'
+// import QuickLinksComponent from '@/components/Footer/QuickLinksComponent.vue'
+// import CustomAreaComponent from '@/components/Footer/CustomAreaComponent.vue'
 import ContactInfoComponent from '@/components/Footer/ContactInfoComponent.vue'
 import FooterBottomComponent from '@/components/Footer/FooterBottomComponent.vue'
 
@@ -34,8 +34,8 @@ export default {
   name: 'FooterComponent',
   components: {
     FooterAboutComponent,
-    QuickLinksComponent,
-    CustomAreaComponent,
+    // QuickLinksComponent,
+    // CustomAreaComponent,
     ContactInfoComponent,
     FooterBottomComponent,
   }

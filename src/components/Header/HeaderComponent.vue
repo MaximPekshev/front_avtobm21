@@ -90,6 +90,7 @@ export default {
     mounted() {
       this.checkTheCookiesAuthToken()
       this.loadWishlist()
+      this.loadContracts()
     },
     methods: {
       checkTheCookiesAuthToken () {
@@ -107,6 +108,14 @@ export default {
           this.$store.dispatch('loadWishlist', this.userToken)
         }
       },
+      loadContracts () {
+        let authToken = this.cookies.get("avtobm21_token") 
+        if (authToken) {
+            this.$store.dispatch('loadContracts', authToken)
+        } else if (this.userToken) {
+            this.$store.dispatch('loadContracts', this.userToken)
+        }
+      }
     },
     watch: {
       userToken: {
@@ -117,7 +126,7 @@ export default {
             this.$store.dispatch('loadUserInfo', this.userToken)
           } else {
             this.cookies.remove('avtobm21_token')
-            this.$store.dispatch('cleanUserInfo', {})
+            this.$store.dispatch('clearUserInfo', {})
           }
         }
       },
@@ -126,6 +135,7 @@ export default {
         handler() {
           if (this.cookies.get("avtobm21_token")) {
             this.loadWishlist()
+            this.loadContracts()
           }
         },
       }

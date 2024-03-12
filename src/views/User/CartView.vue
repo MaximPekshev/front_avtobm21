@@ -48,7 +48,7 @@
                 </div>
                 <div class="col mt-5">
                   <ul class="btns_group ul_li_right">
-                    <li><a class="btn btn_dark" href="#!">Перейти к оформлению</a></li>
+                    <li><router-link :to="{ name: 'checkout' }" class="btn btn_dark">Перейти к оформлению</router-link></li>
                   </ul>
                 </div>
               </div>

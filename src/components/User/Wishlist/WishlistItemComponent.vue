@@ -3,7 +3,7 @@
         <div class="cart_product">
             <img v-if="mainImage" :src="mainImage" alt="{{ name }}">
             <img v-else :src="product_preview" alt="{{ name }}">
-            <h3>{{ name }}</h3>
+            <h3><router-link :to="{ name: 'good', params: { id: id }}">{{ name }}</router-link></h3>
         </div>
     </td>
     <td class="text-center"><span class="price_text">{{ price }}</span></td>
@@ -16,8 +16,11 @@
             <div class="spinner-border spinner-border-sm text-primary" role="status">
             </div>
         </a>
-        <a v-else class="btn btn_gray" @click="addToCart">
-            <i class="fa fa-cart-plus" :class="{ 'text-secondary': balance == 0 }"></i>
+        <a v-else 
+            class="btn btn_gray" 
+            :class="{'disabled_button' : outOfStock}"
+            @click="addToCart">
+            <i class="fa fa-cart-plus" :class="{ 'text-secondary': outOfStock }"></i>
         </a>
     </td>
     <td class="text-center">
@@ -57,6 +60,13 @@ export default {
             }
             return qtyInCart
         },
+        outOfStock () {
+            let outOfStock = false
+            if (!(this.userToken != '' && this.balance > 0 && this.qtyInCart < this.balance)) {
+                outOfStock = true
+            }
+            return outOfStock
+        },
         mainImage () {
             let path = ''
             if (this.goodInfo.images.length > 0) {
@@ -70,9 +80,9 @@ export default {
             this.$store.dispatch('addDelWishlistItem', {good_id: this.id, authToken: this.userToken, action: 'del'})
         },
         addToCart () {
-            this.loading = true
-            setTimeout(() => {
-                if (this.userToken != '' && this.balance > 0 && this.qtyInCart < this.balance) {
+            if (!this.outOfStock) {
+                this.loading = true
+                setTimeout(() => {
                     this.$store.dispatch('addDelCartItem', 
                     {
                         good_id: this.id,
@@ -81,10 +91,8 @@ export default {
                         action: 'add'
                     })
                     this.loading = false    
-                } else {
-                    this.loading = false
-                }
-            }, 50)
+                }, 50)
+            }
         },
     }
 }

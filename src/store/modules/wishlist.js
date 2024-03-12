@@ -54,7 +54,6 @@ export default {
                 },
                 url: url,
             }).then(response => {
-                console.log(response)
                 commit('loadWishlist', response.data.data)
             }).catch(error => {
                 console.log(error)

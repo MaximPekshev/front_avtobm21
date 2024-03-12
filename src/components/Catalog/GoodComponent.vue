@@ -33,7 +33,10 @@
                     <div class="spinner-border spinner-border-sm text-primary" role="status">
                     </div>
                 </a>
-                <a v-else class="addtocart_btn" @click="addToCart">
+                <a 
+                    v-else 
+                    :class="{'disabled_button' : outOfStock,  'addtocart_btn' : !outOfStock}"
+                    @click="addToCart">
                     в корзину
                 </a>
             </li>
@@ -75,6 +78,13 @@ export default {
             }
             return qtyInCart
         },
+        outOfStock () {
+            let outOfStock = false
+            if (!(this.userToken != '' && this.balance > 0 && this.qtyInCart < this.balance)) {
+                outOfStock = true
+            }
+            return outOfStock
+        },
         mainImage () {
             let path = ''
             if (this.goodInfo.images.length > 0) {
@@ -97,9 +107,9 @@ export default {
             }
         },
         addToCart () {
-            this.loading = true
-            setTimeout(() => {
-                if (this.userToken != '' && this.balance > 0 && this.qtyInCart < this.balance) {
+            if (!this.outOfStock) {
+                this.loading = true
+                setTimeout(() => {
                     this.$store.dispatch('addDelCartItem', 
                     {
                         good_id: this.goodInfo.id,
@@ -108,10 +118,9 @@ export default {
                         action: 'add'
                     })
                     this.loading = false
-                } else {
-                    this.loading = false
-                }
-            }, 50)
+                }, 50)
+            }
+
         },
     }
 }
