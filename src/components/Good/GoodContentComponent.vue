@@ -15,8 +15,7 @@
         <div class="col-lg-6">
         <div class="product_details_content">
             <h2 class="item_title">{{ good.name }}</h2>
-            <p>Арт.: <span>{{ good.art }}</span>
-            </p>
+            <p>Арт.: <span>{{ good.art }}</span></p>
             <div class="item_review">
                 <!-- <ul class="rating_star ul_li">
                     <li><i class="fa-solid fa-star"></i></li>
@@ -61,7 +60,7 @@
                 </div>
             </div>
 
-            <ul class="default_btns_group ul_li">
+            <ul class="default_btns_group ul_li mb-5">
                 <li>
                     <a v-if="loading" class="addtocart_btn">
                         <div class="spinner-border spinner-border-sm text-primary" role="status">
@@ -75,36 +74,18 @@
                 <li v-if="itemInWishlist(good.id)"><a class="wishlist-ckecked" @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
                 <li v-else><a @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
             </ul>
-
-            <ul class="default_share_links ul_li">
-                <li>
-                    <a class="facebook" href="#">
-                    <span><i class="fab fa-facebook-square"></i> Like</span>
-                    <small>10K</small>
-                    </a>
-                </li>
-                <li>
-                    <a class="twitter" href="#">
-                    <span><i class="fab fa-twitter-square"></i> Tweet</span>
-                    <small>15K</small>
-                    </a>
-                </li>
-                <li>
-                    <a class="google" href="#">
-                    <span><i class="fab fa-google-plus-square"></i> Google+</span>
-                    <small>20K</small>
-                    </a>
-                </li>
-                <li>
-                    <a class="share" href="#">
-                    <span><i class="fas fa-plus-square"></i> Share</span>
+            <ul v-if="good.applicabilities.length > 0" class="default_share_links ul_li">
+                <h3 class="title_text col-12">Применимость<span class="underline"></span></h3>
+                <li v-for="item in good.applicabilities" v-bind:key="item.id">
+                    <a>
+                    <small>{{ item.model.name }}</small>
                     </a>
                 </li>
             </ul>
         </div>
         </div>
     </div>
-    </div>
+</div>
 </template>
 
 <script>
@@ -134,6 +115,15 @@ export default {
         },
         balance () {
             return Math.floor(this.good.balance)
+        },
+        applicabilities () {
+            let applicabilities = ''
+            if (this.good.applicabilities) {
+                this.good.applicabilities.forEach((item) => {
+                    applicabilities += `${item.model.name} `
+                })
+            }
+            return (applicabilities)
         },
         userToken () {
             return this.$store.getters.user_token

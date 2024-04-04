@@ -7,6 +7,7 @@ import wishlist from './modules/wishlist'
 import cart from './modules/cart'
 import contract from './modules/contract'
 import orders from './modules/order'
+import advertisement_list from './modules/advertisement_list'
 
 export default createStore({
   state: {
@@ -25,6 +26,7 @@ export default createStore({
     wishlist,
     cart,
     contract,
-    orders
+    orders,
+    advertisement_list
   }
 })

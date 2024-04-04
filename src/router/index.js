@@ -11,6 +11,7 @@ import UserAccountView from '../views/User/UserAccountView.vue'
 import CartView from '../views/User/CartView.vue'
 import CheckoutView from '../views/User/CheckoutView.vue'
 import OrderListView from '../views/User/OrderListView.vue'
+import AdvertisementItemView from '../views/AdvertisementItemView.vue'
 
 const routes = [
   {
@@ -80,6 +81,11 @@ const routes = [
         component: CategoryView
       }
     ]
+  },
+  {
+    path: '/advertisement/:id/',
+    name: 'advertisement',
+    component: AdvertisementItemView
   },
   {
     path: '/contact/',

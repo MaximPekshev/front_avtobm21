@@ -2,11 +2,11 @@
   <!-- <SideBarCartComponent /> -->
   <div class="body_wrap">
     <BackToTop />
+    <HeaderComponent />
     <main>
-      
+      <AdvertisementComponent />
     </main>
     <!-- <PreloaderComponent /> -->
-    <HeaderComponent />
     <FooterComponent />
   </div>
 </template>
@@ -18,6 +18,7 @@
 import HeaderComponent from '@/components/Header/HeaderComponent.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import FooterComponent from '@/components/Footer/FooterComponent.vue'
+import AdvertisementComponent from '@/components/Main/Advertisement/AdvertisementListComponent.vue'
 // import SideBarCartComponent from '@/components/SideBarCartComponent.vue'
 
 
@@ -31,6 +32,7 @@ export default {
     BackToTop,
     // PreloaderComponent,
     FooterComponent,
+    AdvertisementComponent
     // SideBarCartComponent
   },
   watch: {

@@ -48,7 +48,7 @@ export default {
             let cartItems = []
             cart.forEach((item) => {
                 cartItems.push({
-                    "good_id": item.good.uid,
+                    "good_id": item.good.id,
                     "quantity": item.quantity,
                     "price": item.good.price,
                     "summ": (item.good.price*item.quantity).toFixed(2)

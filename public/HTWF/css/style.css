@@ -4332,6 +4332,16 @@ hr {
   margin-bottom: 20px;
   font-family: "Lato", sans-serif;
 }
+
+/* +as */
+.product_details_content .adv_title {
+  font-size: 46px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  font-family: "Lato", sans-serif;
+}
+/* -as */
+
 .product_details_content p {
   margin-bottom: 30px;
 }
@@ -4364,6 +4374,14 @@ hr {
   margin-right: 7px;
   color: #252525;
 }
+
+.product_details_content .item_price .adv_price {
+  font-size: 32px;
+  font-weight: 700;
+  margin-right: 7px;
+  color: #252525;
+}
+
 .product_details_content .item_price del {
   font-weight: 400;
   margin-bottom: 4px;
