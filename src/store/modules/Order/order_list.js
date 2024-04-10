@@ -10,6 +10,9 @@ export default {
         ordersList: state => {
             return state.orders_list
         },
+        orderListQty: state => {
+            return state.orders_list.length
+        },
         ordersListLoading: state => {
             return state.orders_list_loading
         }

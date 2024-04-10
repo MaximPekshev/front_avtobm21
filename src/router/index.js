@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CatalogView from '../views/CatalogView.vue'
 import ContactView from '../views/ContactView.vue'
-import CompareView from '../views/CompareView.vue'
 import WishlistView from '../views/User/WishlistView.vue'
 import GoodView from '../views/GoodView.vue'
 import CategoryView from '../views/CategoryView.vue'
@@ -10,7 +9,8 @@ import UserLoginView from '../views/User/UserLoginView.vue'
 import UserAccountView from '../views/User/UserAccountView.vue'
 import CartView from '../views/User/CartView.vue'
 import CheckoutView from '../views/User/CheckoutView.vue'
-import OrderListView from '../views/User/OrderListView.vue'
+import OrderListView from '../views/User/Order/OrderListView.vue'
+import OrderItemView from '../views/User/Order/OrderListItemView.vue'
 import AdvertisementItemView from '../views/AdvertisementItemView.vue'
 
 const routes = [
@@ -56,9 +56,19 @@ const routes = [
         component: CheckoutView
       },
       {
-        path: 'order-list/',
-        name: 'userOrderList',
-        component: OrderListView
+        path: 'orders/',
+        children: [
+          {
+            path: 'list/',
+            name: 'userOrderList',
+            component: OrderListView
+          },
+          {
+            path: ':id/',
+            name: 'userOrderItem',
+            component: OrderItemView
+          },
+        ]
       },
     ]
   },
@@ -91,11 +101,6 @@ const routes = [
     path: '/contact/',
     name: 'contact',
     component: ContactView
-  },
-  {
-    path: '/compare/',
-    name: 'compare',
-    component: CompareView
   },
 ]
 

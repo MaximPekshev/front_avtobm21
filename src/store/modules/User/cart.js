@@ -36,6 +36,56 @@ export default {
         }
     },
     actions: {
+        async setCartItemQty ({commit}, params) {
+            let authToken = params.authToken
+            let good_id = params.good_id
+            let originalQty = params.originalQty
+            let newQty = params.newQty
+            commit('cartLoadingSwitch', true)
+            let delUrl = `${backendPath}/api/v1/cart/delete/`
+            let delData = {
+                "data" : [
+                    {
+                        "good_id" : good_id,
+                        "quantity": Number(originalQty)
+                    }
+                ]
+            }
+            await Axios({
+                method: 'post',
+                headers: {
+                    "Authorization": `Token ${authToken}`,
+                },
+                url: delUrl,
+                data: delData,
+            }).then(() => {
+                let addUrl = `${backendPath}/api/v1/cart/add/`
+                let addData = {
+                    "data" : [
+                        {
+                            "good_id" : good_id,
+                            "quantity": Number(newQty)
+                        }
+                    ]
+                }
+                Axios({
+                    method: 'post',
+                    headers: {
+                        "Authorization": `Token ${authToken}`,
+                    },
+                    url: addUrl,
+                    data: addData,
+                }).then(response => {
+                    commit('loadCartData', response.data.data)
+                }).catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                    commit('cartLoadingSwitch', false)
+                })
+            }).catch(error => {
+                console.log(error)
+            })
+        },
         async addDelCartItem({commit}, params) {
             let good_id = params.good_id
             let quantity = params.quantity
@@ -52,7 +102,7 @@ export default {
                 "data" : [
                     {
                         "good_id" : good_id,
-                        "quantity": quantity
+                        "quantity": Number(quantity)
                     }
                 ]
             }

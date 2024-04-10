@@ -18,7 +18,7 @@
                     </button>
                   </li>
                   <li><router-link to="/contact"><i class="fa-regular fa-location-dot"></i></router-link></li>
-                  <li><router-link to="/compare"><i class="fa-solid fa-arrows-rotate"></i></router-link></li>
+                  <!-- <li><router-link to="/compare"><i class="fa-solid fa-arrows-rotate"></i></router-link></li> -->
                   <li v-if="user">
                     <router-link :to="{ name: 'wishlist'}">
                       <i class="fa-regular fa-heart"></i>
@@ -133,6 +133,7 @@ export default {
       '$route': {
         immediate: true,
         handler() {
+          // this.cookies.set("avtobm21_token", "")
           if (this.cookies.get("avtobm21_token")) {
             this.loadWishlist()
             this.loadContracts()

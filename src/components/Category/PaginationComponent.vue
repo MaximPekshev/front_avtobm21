@@ -52,11 +52,6 @@
 <script>
 export default {
     name: 'PaginationComponent',
-    // data() {
-    //     return {
-            
-    //     }
-    // },
     computed: {
         pageQty () {
             return this.getPageQty()

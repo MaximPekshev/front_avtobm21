@@ -3,7 +3,7 @@
         <div v-for="(group, key) in computedProperties" :key="group.id" class="additional_info_list">
             <h4 class="info_title">{{ key }}</h4>
             <ul class="ul_li_block">
-                <li v-for="(property, key) in group" :key="property.id">{{ key }}: {{ property }}</li>
+                <li v-for="property in group" :key="property.id">{{ property.name }}: {{ property.value }}</li>
             </ul>
         </div>
     </div>
@@ -24,22 +24,34 @@ export default {
             let uniqueGroups = []
             // получаем уникальные имена групп характеристик
             this.properties.forEach((groupEl) => {
-                if (uniqueGroups.indexOf(groupEl.property.group.name) === -1) {
-                    uniqueGroups.push(groupEl.property.group.name)
+                let newElement = {
+                    "name": groupEl.property.group.name,
+                    "ordering": Math.floor(groupEl.property.group.ordering)
+                }
+                if (!uniqueGroups.find(item => item.name === groupEl.property.group.name)) {
+                    uniqueGroups.push(newElement) 
                 }
             })
+            uniqueGroups.sort((item1, item2) => item1['ordering'] > item2['ordering'] ? 1 : -1)
             if (uniqueGroups.length > 0) {
-                uniqueGroups.forEach((uniqueGroupName) => {
-                    let propertiesList = {}
+                uniqueGroups.forEach((uniqueGroupItem) => {
+                    let propertiesList = []
                     // выбираем характеристики с необходимым именем группы хар-к и добавляем в объект
                     this.properties.forEach((property) => {
-                        if (property.property.group.name === uniqueGroupName) {
-                            propertiesList[property.property.name] = property.value
+                        let newPropElement = {
+                            "name": property.property.name,
+                            "ordering": Math.floor(property.property.ordering),
+                            "value": property.value
+                        }
+                        if (property.property.group.name === uniqueGroupItem.name) {
+                            // propertiesList[property.property.name] = property.value
+                            propertiesList.push(newPropElement)
                         }
                     })
+                    propertiesList.sort((item1, item2) => item1['ordering'] > item2['ordering'] ? 1 : -1)
                     // формируем финальный объект свойств с разбивкой по группам свойств
                     if (Object.keys(propertiesList).length > 0) {
-                        propertiesByGroup[uniqueGroupName] = propertiesList
+                        propertiesByGroup[uniqueGroupItem.name] = propertiesList
                     }
                 })
             }

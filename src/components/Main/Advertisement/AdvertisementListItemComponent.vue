@@ -41,7 +41,7 @@ export default {
         image () {
             let path = ''
             if (this.mainImage) {
-                path = backendPath + this.mainImage
+                path = backendPath + this.mainImage.url
             } else {
                 if (this.images.length > 0) {
                     path = backendPath + this.images[0].image.url

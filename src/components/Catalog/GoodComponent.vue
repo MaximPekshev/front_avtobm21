@@ -6,24 +6,15 @@
         <div v-if="mainImage" class="item_image">
             <img :src="mainImage" alt="{{ name }}">
             <img :src="mainImage" alt="{{ name }}">
-            <!-- <a class="quickview_btn" data-bs-toggle="modal" href="#quickview_popup" role="button">Quick View</a> -->
         </div>
         <div v-else class="item_image">
             <img :src="product_preview" alt="{{ name }}">
             <img :src="product_preview" alt="{{ name }}">
-            <!-- <a class="quickview_btn" data-bs-toggle="modal" href="#quickview_popup" role="button">Quick View</a> -->
         </div>
         <div class="item_content">
             <h3 class="item_title">
             <router-link :to="{ name: 'good', params: { id: id }}">{{ name }}</router-link>
             </h3>
-            <!-- <ul class="rating_star ul_li">
-            <li><i class="fa-solid fa-star"></i></li>
-            <li><i class="fa-solid fa-star"></i></li>
-            <li><i class="fa-solid fa-star"></i></li>
-            <li><i class="fa-solid fa-star"></i></li>
-            <li><i class="far fa-star"></i></li>
-            </ul> -->
             <div class="item_price">
             <span>{{ price }}</span>
             </div>
@@ -35,12 +26,10 @@
                 </a>
                 <a 
                     v-else 
-                    :class="{'disabled_button' : outOfStock,  'addtocart_btn' : !outOfStock}"
-                    @click="addToCart">
+                    @click="addToCart" class="addtocart_btn">
                     в корзину
                 </a>
             </li>
-            <!-- <li><a href="#"><i class="fa-solid fa-arrows-rotate"></i></a></li> -->
             <li v-if="itemInWishlist(id)"><a class="wishlist-ckecked" @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
             <li v-else><a @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
             </ul>
@@ -78,13 +67,6 @@ export default {
             }
             return qtyInCart
         },
-        outOfStock () {
-            let outOfStock = false
-            if (!(this.userToken != '' && this.balance > 0 && this.qtyInCart < this.balance)) {
-                outOfStock = true
-            }
-            return outOfStock
-        },
         mainImage () {
             let path = ''
             if (this.goodInfo.images.length > 0) {
@@ -107,20 +89,17 @@ export default {
             }
         },
         addToCart () {
-            if (!this.outOfStock) {
-                this.loading = true
-                setTimeout(() => {
-                    this.$store.dispatch('addDelCartItem', 
-                    {
-                        good_id: this.goodInfo.id,
-                        authToken: this.userToken,
-                        quantity: 1,
-                        action: 'add'
-                    })
-                    this.loading = false
-                }, 50)
-            }
-
+            this.loading = true
+            setTimeout(() => {
+                this.$store.dispatch('addDelCartItem', 
+                {
+                    good_id: this.goodInfo.id,
+                    authToken: this.userToken,
+                    quantity: 1,
+                    action: 'add'
+                })
+                this.loading = false
+            }, 50)
         },
     }
 }

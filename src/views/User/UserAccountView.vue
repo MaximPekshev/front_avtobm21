@@ -102,11 +102,13 @@ export default {
       }, 1000);
     },
   },
-  '$route': {
-      immediate: true,
-      handler() {
-          document.title = 'Личный кабинет'
-      }
-  },
+  watch: {
+    '$route': {
+        immediate: true,
+        handler() {
+            document.title = 'Личный кабинет'
+        }
+    },
+  }
 }
 </script>

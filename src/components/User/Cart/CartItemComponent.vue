@@ -1,9 +1,9 @@
 <template>
     <td>
         <div class="cart_product">
-        <img v-if="mainImage" :src="mainImage" alt="{{ name }}">
-        <img v-else :src="product_preview" alt="{{ name }}">
-        <h3><router-link :to="{ name: 'good', params: { id: id }}">{{ name }}</router-link></h3>
+            <img v-if="mainImage" :src="mainImage" alt="{{ name }}">
+            <img v-else :src="product_preview" alt="{{ name }}">
+            <h3><router-link :to="{ name: 'good', params: { id: id }}">{{ name }}</router-link></h3>
         </div>
     </td>
     <td class="text-center"><span class="price_text">{{ price }}</span></td>
@@ -11,20 +11,23 @@
         <div>
             <div class="quantity_input">
                 <button @click="decreaseQty" type="button" class="input_number_decrement">
-                <i class="fal fa-minus"></i>
+                    <i class="fal fa-minus"></i>
                 </button>
-                <input class="input_number" type="text" :value="qty" readonly>
-                <button v-if="canIncrease" @click="increaseQty" type="button" class="">
-                <i class="fal fa-plus"></i>
-                </button>
-                <button v-else type="button" class="disabled_button">
-                <i class="fal fa-plus"></i>
+                <input 
+                    @keyup.enter="setCartItemQty" 
+                    class="input_number" 
+                    type="text" 
+                    v-model="qty"
+                    @keypress="isNumber($event)"
+                >
+                <button @click="increaseQty" type="button" class="">
+                    <i class="fal fa-plus"></i>
                 </button>
             </div>
         </div>
     </td>
     <td class="text-center"><span class="price_text">{{ amount }}</span></td>
-    <td class="text-center"><button @click="delFromCart" type="button" class="remove_btn"><i class="fal fa-trash-alt"></i></button></td>
+    <td class="text-center"><button @click="delFromCart(originalQty)" type="button" class="remove_btn"><i class="fal fa-trash-alt"></i></button></td>
 </template>
 
 <script>
@@ -41,7 +44,8 @@ export default {
             name: this.goodInfo.name,
             price: this.goodInfo.price,
             balance: this.goodInfo.balance,
-            qty: (this.goodInfo.balance > 0) ? Math.floor(this.quantity) : 0,
+            qty: Math.floor(this.quantity),
+            originalQty: Math.floor(this.quantity),
         }
     },
     computed: {
@@ -66,27 +70,46 @@ export default {
         }
     },
     methods: {
-        delFromCart () {
-            this.$store.dispatch('addDelCartItem', {good_id: this.id, quantity:this.qty, authToken: this.userToken, action: 'del'})
+        delFromCart (qty) {
+            this.$store.dispatch('addDelCartItem', {good_id: this.id, quantity:qty, authToken: this.userToken, action: 'del'})
         },
-        incQtyInCart () {
-            this.$store.dispatch('addDelCartItem', {good_id: this.id, quantity:1, authToken: this.userToken, action: 'add'})
+        incQtyInCart (qty) {
+            this.$store.dispatch('addDelCartItem', {good_id: this.id, quantity:qty, authToken: this.userToken, action: 'add'})
         },
-        decQtyInCart () {
-            this.$store.dispatch('addDelCartItem', {good_id: this.id, quantity:1, authToken: this.userToken, action: 'del'})
+        decQtyInCart (qty) {
+            this.$store.dispatch('addDelCartItem', {good_id: this.id, quantity:qty, authToken: this.userToken, action: 'del'})
         },
         increaseQty() {
-            if (this.qty < this.balance) {
-                this.qty ++
-                this.incQtyInCart ()
-            }
+            this.qty ++
+            this.incQtyInCart (1)
         },
         decreaseQty() {
             if (this.qty > 1) {
                 this.qty --
-                this.decQtyInCart ()
+                this.decQtyInCart (1)
             }
         },
-    }
+        setCartItemQty () {
+            if (Number(this.qty) > 0) {
+                this.$store.dispatch(
+                    'setCartItemQty',
+                    {
+                        good_id: this.id,
+                        originalQty:this.originalQty,
+                        authToken: this.userToken,
+                        newQty:this.qty,
+                    }
+                )
+            }
+        },
+        isNumber (evt) {
+            const keysAllowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            const keyPressed = evt.key;
+            
+            if (!keysAllowed.includes(keyPressed)) {
+                evt.preventDefault()
+            }
+        }
+    },
 }
 </script>

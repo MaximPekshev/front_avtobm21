@@ -2,7 +2,6 @@
     <section class="cart_section section_space">
         <div class="container">
             <div class="cart_update_wrap">
-                <!-- <p class="mb-0"><i class="fal fa-check-square"></i> Shipping costs updated.</p> -->
             </div>
             <div class="cart_table">
                 <table class="table mb-0">

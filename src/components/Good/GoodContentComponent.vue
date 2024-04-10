@@ -17,19 +17,10 @@
             <h2 class="item_title">{{ good.name }}</h2>
             <p>Арт.: <span>{{ good.art }}</span></p>
             <div class="item_review">
-                <!-- <ul class="rating_star ul_li">
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                    <li><i class="fa-solid fa-star"></i></li>
-                </ul> -->
-                <!-- <span class="review_value">3 Rating(s)</span> -->
                 </div>
                 <div class="item_price">
                 <span>Цена: </span>
                 <span>{{ good.price }}</span>
-                <!-- <del>$720.00</del> -->
             </div>
 
             <hr>
@@ -41,15 +32,15 @@
                     </div>
                 </div>
             </div>
-            <div v-if="good.balance > 0" class="quantity_wrap">
+            <div class="quantity_wrap">
                 <div>
                     <div class="quantity_input">
                         <span class="mr-2">Кол-во: </span>
                         <button @click="decreaseQty" type="button" class="input_number_decrement">
                             <i class="fal fa-minus"></i>
                         </button>
-                            <input readonly class="input_number" type="text" :value="qty">
-                        <button :class="{ 'disabled_button' : !canIncrease }" @click="increaseQty" type="button">
+                        <input @keypress="isNumber($event)" class="input_number" type="text" v-model="qty">
+                        <button @click="increaseQty" type="button">
                             <i class="fal fa-plus"></i>
                         </button>
                     </div>
@@ -66,11 +57,10 @@
                         <div class="spinner-border spinner-border-sm text-primary" role="status">
                         </div>
                     </a>
-                    <a v-else @click="addToCart" :class="{'disabled_button' : outOfStock,  'addtocart_btn' : !outOfStock}" >
+                    <a v-else @click="addToCart" class="addtocart_btn">
                         В корзину
                     </a>
                 </li>
-                <!-- <li><a href="#"><i class="fa-solid fa-arrows-rotate"></i></a></li> -->
                 <li v-if="itemInWishlist(good.id)"><a class="wishlist-ckecked" @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
                 <li v-else><a @click="addToWishlist"><i class="fas fa-heart"></i></a></li>
             </ul>
@@ -152,13 +142,6 @@ export default {
             }
             return qtyInCart
         },
-        outOfStock () {
-            let outOfStock = false
-            if (!(this.userToken != '' && this.balance > 0 && (Number(this.qtyInCart) + this.qty) <= this.balance)) {
-                outOfStock = true
-            }
-            return outOfStock
-        }
     },
     methods: {
         setPageTitle(payload) {
@@ -171,11 +154,7 @@ export default {
             return this.$store.getters.good
         },
         increaseQty() {
-            if (this.canIncrease) {
-                if (this.qty < this.balance) {
-                    this.qty ++
-                }
-            }
+            this.qty ++
         },
         decreaseQty() {
             if (this.qty > 1) {
@@ -195,7 +174,7 @@ export default {
             }    
         },
         addToCart () {
-            if (!this.outOfStock) {
+            if (Number(this.qty) > 0) {
                 this.loading = true
                 setTimeout(() => {
                     this.$store.dispatch('addDelCartItem', 
@@ -209,6 +188,14 @@ export default {
                 }, 50)    
             }
         },
+        isNumber (evt) {
+            const keysAllowed = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            const keyPressed = evt.key;
+            
+            if (!keysAllowed.includes(keyPressed)) {
+                evt.preventDefault()
+            }
+        }
     },
     watch: {
         '$route.query.id': {

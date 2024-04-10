@@ -18,9 +18,8 @@
         </a>
         <a v-else 
             class="btn btn_gray" 
-            :class="{'disabled_button' : outOfStock}"
             @click="addToCart">
-            <i class="fa fa-cart-plus" :class="{ 'text-secondary': outOfStock }"></i>
+            <i class="fa fa-cart-plus"></i>
         </a>
     </td>
     <td class="text-center">
@@ -60,13 +59,6 @@ export default {
             }
             return qtyInCart
         },
-        outOfStock () {
-            let outOfStock = false
-            if (!(this.userToken != '' && this.balance > 0 && this.qtyInCart < this.balance)) {
-                outOfStock = true
-            }
-            return outOfStock
-        },
         mainImage () {
             let path = ''
             if (this.goodInfo.images.length > 0) {
@@ -80,19 +72,17 @@ export default {
             this.$store.dispatch('addDelWishlistItem', {good_id: this.id, authToken: this.userToken, action: 'del'})
         },
         addToCart () {
-            if (!this.outOfStock) {
-                this.loading = true
-                setTimeout(() => {
-                    this.$store.dispatch('addDelCartItem', 
-                    {
-                        good_id: this.id,
-                        authToken: this.userToken,
-                        quantity: 1,
-                        action: 'add'
-                    })
-                    this.loading = false    
-                }, 50)
-            }
+            this.loading = true
+            setTimeout(() => {
+                this.$store.dispatch('addDelCartItem', 
+                {
+                    good_id: this.id,
+                    authToken: this.userToken,
+                    quantity: 1,
+                    action: 'add'
+                })
+                this.loading = false    
+            }, 50)
         },
     }
 }

@@ -53,11 +53,6 @@ export default {
                 return goodsOnPageQty
             }
         },
-        // goodsInterval () {
-        //     let allGoodsQty = this.allGoodsQty()
-        //     let goodsOnPageQty = this.goodsOnPageQty()
-
-        // }
 
     },
     methods: {
@@ -71,5 +66,3 @@ export default {
 
 }
 </script>
-
-goods_on_page_qty

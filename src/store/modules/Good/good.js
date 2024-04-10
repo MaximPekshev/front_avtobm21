@@ -8,13 +8,13 @@ export default {
     },
     getters: {
         good: state => {
-            return state.good;
+            return state.good
         },
         goodsName: state => {
-            return state.good.name;
+            return state.good.name
         },
         good_info_loading: state => {
-            return state.good_info_loading;
+            return state.good_info_loading
         }
     },
     mutations: {
@@ -37,7 +37,7 @@ export default {
                     }, 300);
                 })
                 .catch(function(error){
-                    console.log(error);
+                    console.log(error)
                 });
         },
     }

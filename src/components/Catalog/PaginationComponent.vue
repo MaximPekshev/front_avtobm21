@@ -59,11 +59,6 @@
 <script>
 export default {
     name: 'PaginationComponent',
-    // data() {
-    //     return {
-            
-    //     }
-    // },
     computed: {
         q () {
             return this.$route.query.q

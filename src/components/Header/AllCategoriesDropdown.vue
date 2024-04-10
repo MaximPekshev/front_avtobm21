@@ -12,12 +12,6 @@
                 <li v-for="item in categoriesList" v-bind:key="item.id" @click="closeCategoryDropdown">
                     <router-link :to="{ name: 'category', params: { id: item.id }, query: {page: 1}}">{{ item.name }}</router-link>
                 </li>
-                <!-- <li><a href="shop_list.html.htm"><i class="fa-duotone fa-earth-americas"></i> Most Popular Products</a></li>
-                <li><a href="shop_grid.html.htm"><i class="fa-duotone fa-star-christmas"></i> Deals of the day</a></li>
-                <li><a href="shop_list.html.htm"><i class="fa-duotone fa-mobile-screen"></i> Mobile Accessories</a></li>
-                <li><a href="shop_grid.html.htm"><i class="fa-duotone fa-computer-classic"></i> Computer Accessories</a></li>
-                <li><a href="shop_list.html.htm"><i class="fa-solid fa-lightbulb-cfl"></i> Consumer Electronics</a></li>
-                <li><a href="shop_grid.html.htm"><i class="fa-duotone fa-car"></i> Automobiles & Motorcycles</a></li> -->
                 </ul>
             </div>
         </div>

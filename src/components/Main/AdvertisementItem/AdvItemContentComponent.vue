@@ -70,7 +70,7 @@ export default {
         image () {
             let path = ''
             if (this.advertisementObject.mainImage) {
-                path = backendPath + this.advertisementObject.mainImage
+                path = backendPath + this.advertisementObject.mainImage.url
             } else {
                 if (this.advertisementObject.images.length > 0) {
                     path = backendPath + this.advertisementObject.images[0].image.url
