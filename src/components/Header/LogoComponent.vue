@@ -1,7 +1,7 @@
 <template>
     <div class="brand_logo">
         <router-link class="brand_link" to="/">
-            <img :src="mainLogo" alt="Getyootech - Gadgets Ecommerce Site Template">
+            <img :src="mainLogo">
         </router-link>
     </div>
 </template>

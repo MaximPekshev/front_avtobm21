@@ -4992,9 +4992,9 @@ hr {
 .cart_table table > :not(:last-child) > :last-child > * {
   border-bottom: none;
 }
-.cart_table .table > :not(caption) > * > * {
+/* .cart_table .table > :not(caption) > * > * {
   padding: 15px 30px;
-}
+} */
 .cart_table.checkout_table .table > :not(caption) > * > * {
   border-bottom: none;
 }

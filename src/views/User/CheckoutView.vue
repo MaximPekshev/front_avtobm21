@@ -59,7 +59,7 @@
                                 <td></td>
                                 <td></td>
                                 <td><strong>Итого</strong></td>
-                                <td><strong class="total_text">{{ cartAmount }}</strong></td>
+                                <td nowrap><strong class="total_text">{{  Math.floor(cartAmount).toLocaleString() }} &#8381;</strong></td>
                             </tr>
                             </tbody>
                         </table>

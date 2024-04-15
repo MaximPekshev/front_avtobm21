@@ -1,12 +1,12 @@
 <template>
     <td>
         <div class="cart_product">
-            <img v-if="mainImage" :src="mainImage" alt="{{ name }}">
-            <img v-else :src="product_preview" alt="{{ name }}">
+            <img v-if="mainImage" :src="mainImage" :alt="name">
+            <img v-else :src="product_preview">
             <h3><router-link :to="{ name: 'good', params: { id: id }}">{{ name }}</router-link></h3>
         </div>
     </td>
-    <td class="text-center"><span class="price_text">{{ price }}</span></td>
+    <td class="text-center"><span class="price_text">{{ Math.floor(price).toLocaleString() }} &#8381;</span></td>
     <td class="text-center">
         <span class="price_text text-success" v-if="balance > 0">В наличии</span>
         <span class="price_text text-danger" v-else>Нет в наличии</span>

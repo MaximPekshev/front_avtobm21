@@ -2,7 +2,9 @@
     <div class="footer_widget footer_about">
         <LogoComponent />
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            ОГРН: 1043107001684 ИНН: 3123102015 <br>
+            КПП: 312301001 Юр. адрес: 308002, г. <br>
+            Белгород, ул. Студенческая, д. 21 г
         </p>
     </div>
 </template>

@@ -4,19 +4,19 @@
             <span>HOT</span>
         </div> -->
         <div v-if="mainImage" class="item_image">
-            <img :src="mainImage" alt="{{ name }}">
-            <img :src="mainImage" alt="{{ name }}">
+            <img :src="mainImage" :alt="name">
+            <img :src="mainImage" :alt="name">
         </div>
         <div v-else class="item_image">
-            <img :src="product_preview" alt="{{ name }}">
-            <img :src="product_preview" alt="{{ name }}">
+            <img :src="product_preview">
+            <img :src="product_preview">
         </div>
         <div class="item_content">
             <h3 class="item_title">
             <router-link :to="{ name: 'good', params: { id: id }}">{{ name }}</router-link>
             </h3>
             <div class="item_price">
-            <span>{{ price }}</span>
+            <span>{{ Math.floor(price).toLocaleString() }} &#8381;</span>
             </div>
             <ul class="item_btns_group ul_li">
             <li>

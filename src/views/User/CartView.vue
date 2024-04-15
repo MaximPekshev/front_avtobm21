@@ -41,7 +41,7 @@
                     <ul class="ul_li_block">
                       <li>
                         <span>Итого</span>
-                        <span class="total_price text-end">{{ cartAmount }}</span>
+                        <span class="total_price text-end">{{  Math.floor(cartAmount).toLocaleString() }} &#8381;</span>
                       </li>
                     </ul>
                   </div>

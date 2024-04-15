@@ -20,7 +20,7 @@
                 </div>
                 <div class="item_price">
                 <span>Цена: </span>
-                <span>{{ good.price }}</span>
+                <span>{{ Math.floor(good.price).toLocaleString() }} &#8381;</span>
             </div>
 
             <hr>
@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="total_price">
-                    Сумма: {{ amount }}
+                    Сумма: {{ Math.floor(amount).toLocaleString() }} &#8381;
                 </div>
             </div>
 
@@ -165,7 +165,7 @@ export default {
             return this.$store.getters.wishlistItemById(id)
         },
         addToWishlist () {
-            if (this.userToken != '') {
+            if (this.userToken) {
                 if (this.itemInWishlist(this.good.id)) {
                     this.$store.dispatch('addDelWishlistItem', {good_id: this.good.id, authToken: this.userToken, action: 'del'})
                 } else {
@@ -174,7 +174,7 @@ export default {
             }    
         },
         addToCart () {
-            if (Number(this.qty) > 0) {
+            if (Number(this.qty) > 0 && this.userToken) {
                 this.loading = true
                 setTimeout(() => {
                     this.$store.dispatch('addDelCartItem', 

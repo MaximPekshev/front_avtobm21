@@ -4,7 +4,7 @@
           <i class="icon icon-ShoppingCart"></i>
           <small class="cart_counter" v-if="cartQty > 0">{{ cartQty }}</small>
         </span>
-        <span class="cart_amount">{{ cartAmount }}</span>
+        <span class="cart_amount">{{ Math.floor(cartAmount).toLocaleString() }} &#8381;</span>
     </router-link>
 </template>
 <script>

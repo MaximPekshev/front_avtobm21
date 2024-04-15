@@ -51,7 +51,7 @@
                                             <td></td>
                                             <td></td>
                                             <td>Итого</td>
-                                            <td>{{ orderAmount }}</td>
+                                            <td>{{  Math.floor(orderAmount).toLocaleString() }} &#8381;</td>
                                         </tr>
                                     </tbody>
                                 </table>

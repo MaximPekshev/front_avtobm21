@@ -4,7 +4,7 @@
             <h3>{{ name }}</h3>
         </div>
     </td>
-    <td class="text-center"><span class="price_text">{{ price }}</span></td>
+    <td nowrap class="text-center"><span class="price_text">{{  Math.floor(price).toLocaleString() }} &#8381;</span></td>
     <td class="text-center">
         <div>
             <div class="quantity_input">
@@ -12,7 +12,7 @@
             </div>
         </div>
     </td>
-    <td class="text-center"><span class="price_text">{{ summ }}</span></td>
+    <td nowrap class="text-center"><span class="price_text">{{  Math.floor(amount).toLocaleString() }} &#8381;</span></td>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ export default {
             name: this.orderItem.good.name,
             price: this.orderItem.price,
             quantity: Math.floor(this.orderItem.quantity),
-            summ: this.orderItem.summ
+            amount: this.orderItem.summ
         }
     }
 }

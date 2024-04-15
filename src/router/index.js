@@ -12,20 +12,17 @@ import CheckoutView from '../views/User/CheckoutView.vue'
 import OrderListView from '../views/User/Order/OrderListView.vue'
 import OrderItemView from '../views/User/Order/OrderListItemView.vue'
 import AdvertisementItemView from '../views/AdvertisementItemView.vue'
+import NotFound from '../views/PageNotFound.vue'
 
 const routes = [
+  { 
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound },
   {
     path: '/',
     name: 'home',
     component: HomeView,
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
     path: '/user/',
@@ -101,7 +98,7 @@ const routes = [
     path: '/contact/',
     name: 'contact',
     component: ContactView
-  },
+  }
 ]
 
 const router = createRouter({

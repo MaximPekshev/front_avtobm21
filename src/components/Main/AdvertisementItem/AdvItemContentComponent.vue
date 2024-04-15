@@ -3,12 +3,29 @@
 <div v-if="advertisementObject" class="container">
     <div class="row">
         <div class="col col-lg-6">
-            <div class="product_details_image">
+            <div v-if="images" class="product_details_image">
                 <div class="details_image_carousel">
-                    <div class="slider_item">
-                        <img v-if="image" :src="image" alt="{{ advertisementObject.name }}">
-                        <img v-else :src="AdvPreview" alt="{{ advertisementObject.name }}">
-                    </div>
+                    <Carousel id="gallery" :items-to-show="1" :wrap-around="false" v-model="currentSlide">
+                        <Slide v-for="slide in images" :key="slide">
+                            <div class="carousel__item"><img :src="slide.url"></div>
+                        </Slide>
+                    </Carousel>
+                    <Carousel
+                        id="thumbnails"
+                        :items-to-show="3"
+                        :wrap-around="true"
+                        v-model="currentSlide"
+                        ref="carousel"
+                    >   
+                        <Slide v-for="(slide, index) in images" :key="slide">
+                            <div class="carousel__item"><img style="cursor: pointer;" @click="slideTo(index)" class="p-2" :src="slide.url"></div>
+                        </Slide>
+                    </Carousel>
+                </div>
+            </div>
+            <div v-else class="product_details_image">
+                <div class="slider_item">
+                    <img :src="AdvPreview">
                 </div>
             </div>
         </div>
@@ -20,7 +37,7 @@
                 </p>
                 <div class="item_price">
                     <span>Цена: </span>
-                    <span class="adv_price">{{ advertisementObject.price }} &#8381;</span>
+                    <span class="adv_price">{{ Math.floor(advertisementObject.price).toLocaleString() }} &#8381;</span>
                 </div>
             </div>
         </div>
@@ -41,21 +58,26 @@
 </template>
 
 <script>
+import { Carousel, Slide } from 'vue3-carousel'
 import {backendPath} from "@/main.js"
 import AdvPreview from "@/assets/images/advertisement_preview.png"
 import PreloaderComponent from '@/components/PreloaderComponent.vue'
 import AdvItemPropertiesComponent from '@/components/Main/AdvertisementItem/AdvItemPropertiesComponent.vue'
+import 'vue3-carousel/dist/carousel.css'
 
 export default {
     name: 'GoodContentComponent',
     data () {
         return {
             AdvPreview,
+            currentSlide: 0,
         }
     },
     components: {
         PreloaderComponent,
-        AdvItemPropertiesComponent
+        AdvItemPropertiesComponent,
+        Carousel,
+        Slide,
     },
     computed: {
         id () {
@@ -67,21 +89,27 @@ export default {
         advertisementsListLoading () {
             return this.$store.getters.advertisementsListLoading
         },
-        image () {
-            let path = ''
-            if (this.advertisementObject.mainImage) {
-                path = backendPath + this.advertisementObject.mainImage.url
-            } else {
-                if (this.advertisementObject.images.length > 0) {
-                    path = backendPath + this.advertisementObject.images[0].image.url
-                }
+        images () {
+            let advImagesList = []
+            if (this.advertisementObject.image) {
+                advImagesList.push({
+                    "url": (backendPath + this.advertisementObject.image.url)
+                })
             }
-            return path
+            this.advertisementObject.images.forEach((img) => {
+                advImagesList.push({
+                    "url": (backendPath + img.image.url)
+                })
+            })
+            return advImagesList
         }
     },
     methods: {
         setPageTitle(payload) {
             document.title = payload
+        },
+        slideTo(val) {
+            this.currentSlide = val
         },
     },
     watch: {
