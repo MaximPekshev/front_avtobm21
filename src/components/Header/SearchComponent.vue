@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="advance_search">
-            <div class="form_item">
+            <div class="form_item" style="margin-top: 10px; margin-bottom: 10px;">
                 <input
                     v-model="searchInput"
                     type="search"

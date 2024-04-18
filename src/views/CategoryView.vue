@@ -15,7 +15,7 @@
                             <ContentComponent />
                         </div>
                         <div class="col-lg-3 order-lg-first">
-                            <!-- <SideBarComponent /> -->
+                            <SideBarComponent />
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@ import HeaderComponent from '@/components/Header/HeaderComponent.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import FooterComponent from '@/components/Footer/FooterComponent.vue'
 import CategoryBreadCrumbs from '@/components/Category/CategoryBreadCrumbs.vue'
-// import SideBarComponent from '@/components/Catalog/SideBarComponent.vue'
+import SideBarComponent from '@/components/Catalog/SideBarComponent.vue'
 import FilterTopBarComponent from '@/components/Catalog/FilterTopBarComponent.vue'
 import ContentComponent from '@/components/Category/ContentComponent.vue'
 // import SideBarCartComponent from '@/components/SideBarCartComponent.vue'
@@ -44,7 +44,7 @@ export default {
         // PreloaderComponent,
         FooterComponent,
         CategoryBreadCrumbs,
-        // SideBarComponent,
+        SideBarComponent,
         FilterTopBarComponent,
         ContentComponent,
         // SideBarCartComponent
@@ -53,7 +53,7 @@ export default {
         $route: {
             immediate: true,
             handler() {
-                document.title = 'Катеория'
+                document.title = `Категория`
             },
         },
     },

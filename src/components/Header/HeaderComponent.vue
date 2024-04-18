@@ -37,7 +37,7 @@
           <div class="container">
             <div class="row align-items-center">
               <div class="col col-md-3 col-6">
-                <AllCategoriesDropdown />
+                <!-- <AllCategoriesDropdown /> -->
               </div>
               <div class="col col-md-6">
                 <SearchComponent />
@@ -57,7 +57,7 @@ import { useCookies } from "vue3-cookies"
 import HeaderTop from '@/components/Header/HeaderTop.vue'
 import LogoComponent from '@/components/Header/LogoComponent.vue'
 import MainMenuComponent from '@/components/Header/MainMenuComponent.vue'
-import AllCategoriesDropdown from '@/components/Header/AllCategoriesDropdown.vue'
+// import AllCategoriesDropdown from '@/components/Header/AllCategoriesDropdown.vue'
 import SearchComponent from '@/components/Header/SearchComponent.vue'
 import CartComponent from '@/components/Header/CartComponent.vue'
 
@@ -72,7 +72,7 @@ export default {
         HeaderTop,
         LogoComponent,
         MainMenuComponent,
-        AllCategoriesDropdown,
+        // AllCategoriesDropdown,
         SearchComponent,
         CartComponent
     },

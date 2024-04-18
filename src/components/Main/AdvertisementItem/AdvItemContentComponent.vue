@@ -7,18 +7,27 @@
                 <div class="details_image_carousel">
                     <Carousel id="gallery" :items-to-show="1" :wrap-around="false" v-model="currentSlide">
                         <Slide v-for="slide in images" :key="slide">
-                            <div class="carousel__item"><img :src="slide.url"></div>
+                            <div class="carousel__item">
+                                <img 
+                                    v-fullscreen-image="{
+                                        imageUrl: images,
+                                        withDownload: false,
+                                        animation: 'blur'
+                                    }"
+                                 :src="slide"
+                                />
+                            </div>
                         </Slide>
                     </Carousel>
                     <Carousel
                         id="thumbnails"
-                        :items-to-show="3"
+                        :items-to-show="itemsToShow"
                         :wrap-around="true"
                         v-model="currentSlide"
                         ref="carousel"
                     >   
                         <Slide v-for="(slide, index) in images" :key="slide">
-                            <div class="carousel__item"><img style="cursor: pointer;" @click="slideTo(index)" class="p-2" :src="slide.url"></div>
+                            <div class="carousel__item"><img style="cursor: pointer;" @click="slideTo(index)" class="p-2" :src="slide"></div>
                         </Slide>
                     </Carousel>
                 </div>
@@ -92,16 +101,19 @@ export default {
         images () {
             let advImagesList = []
             if (this.advertisementObject.image) {
-                advImagesList.push({
-                    "url": (backendPath + this.advertisementObject.image.url)
-                })
+                advImagesList.push((backendPath + this.advertisementObject.image.url))
             }
             this.advertisementObject.images.forEach((img) => {
-                advImagesList.push({
-                    "url": (backendPath + img.image.url)
-                })
+                advImagesList.push(backendPath + img.image.url)
             })
             return advImagesList
+        },
+        itemsToShow () {
+            if (this.images.length > 3) {
+                return 3
+            } else {
+                return this.images.length
+            }
         }
     },
     methods: {

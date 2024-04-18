@@ -3,8 +3,17 @@
         <div class="container">
             <ul class="breadcrumb_nav ul_li">
                 <li><router-link to="/">Домой</router-link></li>
-                <li>Категории</li>
-                <!-- <li>{{ name }}</li> -->
+                <li>
+                    <router-link 
+                        :to="{ 
+                            name: 'catalog', 
+                            query: {page: 1}
+                        }"
+                    >
+                    Каталог
+                    </router-link>
+                </li>
+                <li v-if="category">{{ category.name }}</li>
             </ul>
         </div>
     </div>
@@ -14,16 +23,9 @@
 export default {
     name: 'CatalogBreadCrumbs',
     computed: {
-        // name () {
-        //     return this.getCategory().name
-        // }
+        category () {
+            return this.$store.getters.getCategoryById(this.$route.params.id)
+        }
     },
-    methods: {
-        // getCategory() {
-        //     console.log(this.$store.getters.getCategoryById(this.$route.params.id))
-        //     return this.$store.getters.getCategoryById(this.$route.params.id)
-        // },
-        
-    }
 }
 </script>

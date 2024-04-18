@@ -6,7 +6,16 @@
             <div class="product_details_image">
                 <div class="details_image_carousel">
                     <div class="slider_item">
-                        <img v-if="mainImage" :src="mainImage" :alt="good.name">
+                        <img 
+                            v-if="mainImage" 
+                            :src="mainImage" 
+                            :alt="good.name"
+                            v-fullscreen-image="{
+                                imageUrl: mainImage,
+                                withDownload: false,
+                                animation: 'blur'
+                            }"
+                        />
                         <img v-else :src="product_preview" :alt="good.name">
                     </div>
                 </div>
