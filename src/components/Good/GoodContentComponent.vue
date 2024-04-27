@@ -35,9 +35,12 @@
             <hr>
             <div class="quantity_wrap">
                 <div>
-                    <div class="quantity_input">
+                    <div v-if="balance > 0" class="quantity_input">
                         <span class="mr-2">Остаток: </span>
                         <span>{{ balance }}</span>
+                    </div>
+                    <div v-else class="quantity_input">
+                        <span>Нет в наличии, возможно под заказ.</span>
                     </div>
                 </div>
             </div>

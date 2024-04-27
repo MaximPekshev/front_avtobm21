@@ -89,17 +89,19 @@ export default {
             }
         },
         addToCart () {
-            this.loading = true
-            setTimeout(() => {
-                this.$store.dispatch('addDelCartItem', 
-                {
-                    good_id: this.goodInfo.id,
-                    authToken: this.userToken,
-                    quantity: 1,
-                    action: 'add'
-                })
-                this.loading = false
-            }, 50)
+            if (this.userToken != '') {
+                this.loading = true
+                setTimeout(() => {
+                    this.$store.dispatch('addDelCartItem', 
+                    {
+                        good_id: this.goodInfo.id,
+                        authToken: this.userToken,
+                        quantity: 1,
+                        action: 'add'
+                    })
+                    this.loading = false
+                }, 50)
+            }    
         },
     }
 }

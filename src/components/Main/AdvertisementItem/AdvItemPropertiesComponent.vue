@@ -1,5 +1,5 @@
 <template>
-    <div v-if="properties" class="tab-content">
+    <div v-if="properties" class="tab-pane fade show active" id="properties_tab" role="tabpanel">
         <div v-for="(group, key) in computedProperties" :key="group.id" class="additional_info_list">
             <h4 class="info_title">{{ key }}</h4>
             <ul class="ul_li_block">

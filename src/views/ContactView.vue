@@ -38,22 +38,22 @@
                       <tbody>
                         <tr>
                           <td>Бюро закупок и продаж автомобилей и спецтехники</td>
-                          <td >ул. Студенческая, 21г <br>тел:</td>
+                          <td >ул. Студенческая, 21г <br>тел: +7(4722) 36-03-30</td>
                           <td class="text-center">Пн-Пт с 8-00 до 17-00</td>
                         </tr>
                         <tr>
                           <td class="backgroundGrey">Фирменный магазин оригинальных запчастей КАМАЗ (розница )</td>
-                          <td class="backgroundGrey">ул. Студенческая, 38 <br>тел:</td>
+                          <td class="backgroundGrey">ул. Студенческая, 38 <br>тел: +7(4722) 40-20-05</td>
                           <td class="text-center backgroundGrey">Пн-Пт с 8-00 до 19-00 <br> Сб-Вс с 9-00 до 17-00</td>
                         </tr>
                         <tr>
                           <td>Отдел сервисного и гарантийного обслуживания автомобилей</td>
-                          <td >ул. Студенческая, 21г <br>тел:</td>
+                          <td >ул. Студенческая, 21г <br>тел: +7(4722) 20-59-21</td>
                           <td class="text-center">Пн-Вс с 8-00 до 20-00</td>
                         </tr>
                         <tr>
                           <td class="backgroundGrey">Бюро закупок и продаж запасных частей</td>
-                          <td class="backgroundGrey">ул. Студенческая, 21г <br>тел:</td>
+                          <td class="backgroundGrey">ул. Студенческая, 21г <br>тел: +7(4722) 20-59-21</td>
                           <td class="text-center backgroundGrey">Пн-Пт с 8-00 до 17-00</td>
                         </tr>
                       </tbody>

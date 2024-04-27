@@ -54,14 +54,25 @@
     <div class="details_information_tab">
         <ul class="tabs_nav nav ul_li" role="tablist">
             <li role="presentation">
-                <button class="active" data-bs-toggle="tab" data-bs-target="#description_tab" type="button" role="tab" aria-controls="description_tab" aria-selected="true">
+                <button class="active" data-bs-toggle="tab" data-bs-target="#properties_tab" type="button" role="tab" aria-controls="properties_tab" aria-selected="true">
                 Характеристики
                 </button>
             </li>
+            <li v-if="advertisementObject.business_offer || advertisementObject.specification" role="presentation">
+                <button data-bs-toggle="tab" data-bs-target="#documents_tab" type="button" role="tab" aria-controls="documents_tab" aria-selected="false">
+                Документы
+                </button>
+            </li>
         </ul>
-        <AdvItemPropertiesComponent 
-            :properties="advertisementObject.properties"
-        ></AdvItemPropertiesComponent>
+        <div class="tab-content">
+            <AdvItemPropertiesComponent 
+                :properties="advertisementObject.properties"
+            ></AdvItemPropertiesComponent>
+            <AdvItemDocumentsComponent
+                :businessOffer="advertisementObject.business_offer"
+                :specification="advertisementObject.specification"
+            ></AdvItemDocumentsComponent>
+        </div>
     </div>
 </div>
 </template>
@@ -72,6 +83,7 @@ import {backendPath} from "@/main.js"
 import AdvPreview from "@/assets/images/advertisement_preview.png"
 import PreloaderComponent from '@/components/PreloaderComponent.vue'
 import AdvItemPropertiesComponent from '@/components/Main/AdvertisementItem/AdvItemPropertiesComponent.vue'
+import AdvItemDocumentsComponent from '@/components/Main/AdvertisementItem/AdvItemDocumentsComponent.vue'
 import 'vue3-carousel/dist/carousel.css'
 
 export default {
@@ -87,6 +99,7 @@ export default {
         AdvItemPropertiesComponent,
         Carousel,
         Slide,
+        AdvItemDocumentsComponent
     },
     computed: {
         id () {

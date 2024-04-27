@@ -15,23 +15,8 @@
                         </div>
                         <div class="select_option clearfix">
                             <h4 class="input_title">Договор</h4>
-                            <!-- <select style="display: none;">
-                                <option data-display="Select Your Country">Select Your Option</option>
-                                <option value="1" selected="">United Kingdom (UK)</option>
-                                <option value="2">United Kingdom (UK)</option>
-                                <option value="3">United Kingdom (UK)</option>
-                                <option value="4">United Kingdom (UK)</option>
-                                <option value="5">United Kingdom (UK)</option>
-                            </select> -->
                             <div class="nice-select" tabindex="0">
                                 <span v-if="contract" class="current">{{ contract.name }} {{ contract.number }} от {{ contract.date }}</span>
-                                <!-- <ul class="list">
-                                    <li data-value="1" class="option selected">United Kingdom (UK)</li>
-                                    <li data-value="2" class="option">United Kingdom (1)</li>
-                                    <li data-value="3" class="option">United Kingdom (2)</li>
-                                    <li data-value="4" class="option">United Kingdom (3)</li>
-                                    <li data-value="5" class="option">United Kingdom (4)</li>
-                                </ul> -->
                             </div>
                         </div>
                     </div>
@@ -157,7 +142,7 @@ export default {
                     authToken: this.userToken,
                 }).then(() => {
                     this.loadOrdersList()
-                    this.$store.dispatch('deleteAllItems', this.userToken)
+                    this.$store.dispatch('deleteAllCartItems', this.userToken)
                     this.$router.push({ name: 'userAccount' })
                 })
                 this.loading = false

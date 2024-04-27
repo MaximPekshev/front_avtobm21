@@ -141,7 +141,7 @@ export default {
         clearCart({commit}, payload) {
             commit('loadCartData', payload)
         },
-        async deleteAllItems({commit}, authToken) {
+        async deleteAllCartItems({commit}, authToken) {
             let url = `${backendPath}/api/v1/cart/clear/`
             await Axios({
                 method: 'get',

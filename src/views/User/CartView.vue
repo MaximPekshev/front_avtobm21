@@ -10,13 +10,13 @@
         <section class="cart_section section_space" v-else>
           <div class="container" v-if="cartQty > 0">
             <div class="cart_update_wrap">
-              <!-- <p class="mb-0"><i class="fal fa-check-square"></i> Shipping costs updated.</p> -->
             </div>
             <div class="cart_table" >
               <table class="table">
                 <thead>
                   <tr>
                     <th>Товар</th>
+                    <th class="text-center">Остаток</th>
                     <th class="text-center">Цена</th>
                     <th class="text-center">Количество</th>
                     <th class="text-center">Сумма</th>
@@ -28,6 +28,7 @@
                     <CartItemComponent 
                     :goodInfo="item.good"
                     :quantity="item.quantity"
+                    :origQty="item.quantity"
                     >
                     </CartItemComponent>  
                   </tr>
