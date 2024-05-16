@@ -14,7 +14,7 @@
                     <h2 class="title_text"></h2>
                     <ul class="account_menu_list ul_li_block">
                       <li class="active"><router-link :to="{ name: 'userAccount' }">Учетная запись</router-link></li>
-                      <li><router-link :to="{ name: 'userOrderList' }">Заказы</router-link></li>
+                      <li><router-link :to="{ name: 'userOrderList', query: { page:1} }">Заказы</router-link></li>
                       <!-- <li><a href="#!">Избранное</a></li> -->
                     </ul>
                   </div>

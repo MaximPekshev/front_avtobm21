@@ -63,7 +63,7 @@ export default {
         q () {
             return this.$route.query.q
         },
-        goodsQty: function() {
+        goodsQty () {
             return this.getGoodsQty()
         },
         pageQty () {

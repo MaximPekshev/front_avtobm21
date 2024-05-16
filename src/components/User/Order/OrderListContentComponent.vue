@@ -49,6 +49,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <OrderListPaginationComponent />
                     </div>
                 </div>
             </div>
@@ -57,18 +58,15 @@
 </template>
 
 <script>
-import { useCookies } from "vue3-cookies"
 import PreloaderComponent from '@/components/PreloaderComponent.vue'
 import OrderListDemoContent from '@/components/User/Order/OrderListDemoContent.vue'
+import OrderListPaginationComponent from '@/components/User/Order/OrderListPaginationComponent.vue'
 export default {
     name: "OrderListContentComponent",
     components: {
         PreloaderComponent,
-        OrderListDemoContent
-    },
-    setup() {
-        const { cookies } = useCookies()
-        return { cookies }
+        OrderListDemoContent,
+        OrderListPaginationComponent
     },
     computed: {
         userToken () {
@@ -84,29 +82,5 @@ export default {
             return this.$store.getters.ordersListLoading
         }
     },
-    mounted () {
-        this.loadOrdersList()
-    },
-    methods: {
-        loadOrdersList () {
-            let authToken = this.cookies.get("avtobm21_token") 
-            if (authToken) {
-                this.$store.dispatch('loadOrdersList', authToken)
-            } else if (this.userToken) {
-                this.$store.dispatch('loadOrdersList', this.userToken)
-            }
-        }
-    },
-    watch: {
-        '$route': {
-            immediate: true,
-            handler() {
-                document.title = 'Список заказов'
-                if (this.cookies.get("avtobm21_token")) {
-                    this.loadOrdersList()
-                }
-            }
-        },
-    }
 }
 </script>
