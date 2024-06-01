@@ -12,6 +12,7 @@ import CheckoutView from '../views/User/CheckoutView.vue'
 import OrderListView from '../views/User/Order/OrderListView.vue'
 import OrderItemView from '../views/User/Order/OrderListItemView.vue'
 import AdvertisementItemView from '../views/AdvertisementItemView.vue'
+import FaqView from '../views/FaqView.vue'
 import NotFound from '../views/PageNotFound.vue'
 
 const routes = [
@@ -98,6 +99,11 @@ const routes = [
     path: '/contact/',
     name: 'contact',
     component: ContactView
+  },
+  {
+    path: '/faq/',
+    name: 'faq',
+    component: FaqView
   }
 ]
 

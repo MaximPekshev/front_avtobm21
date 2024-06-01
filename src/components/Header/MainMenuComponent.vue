@@ -5,6 +5,7 @@
                 <li><router-link to="/">Домой</router-link></li>
                 <li><router-link :to="{ name: 'catalog', query:{page:1}}">Каталог</router-link></li>
                 <li><router-link to="/contact">Контакты</router-link></li>
+                <li><router-link to="/faq">Вопросы</router-link></li>
             </ul>
         </div>
     </nav>
