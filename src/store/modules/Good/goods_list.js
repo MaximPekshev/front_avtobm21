@@ -208,7 +208,7 @@ export default {
                         commit('goodsLoadingSwitch', false)
                     }, 300);
                 })
-                .catch(function(error){
+                .catch((error) => {
                     console.log(error);
                 });
         },

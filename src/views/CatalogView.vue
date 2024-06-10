@@ -50,6 +50,12 @@ export default {
         ContentComponent,
         // SideBarCartComponent
     },
+    mounted () {
+        window.scrollTo({
+            top: 200,
+            behavior: 'smooth'
+        })
+    },
     watch: {
         $route: {
             immediate: true,

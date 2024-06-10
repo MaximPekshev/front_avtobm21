@@ -40,6 +40,12 @@ export default {
             this.$store.dispatch('loadAdvertisementsList')
         }
     },
+    mounted () {
+        window.scrollTo({
+            top: 200,
+            behavior: 'smooth'
+        })
+    },
     watch: {
         '$route.query.id': {
             immediate: true,

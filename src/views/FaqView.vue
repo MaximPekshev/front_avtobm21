@@ -90,6 +90,12 @@ export default {
         FooterComponent,
         DefaultBreadCrumbs
     },
+    mounted () {
+        window.scrollTo({
+            top: 200,
+            behavior: 'smooth'
+        })
+    },
     watch: {
         $route: {
             immediate: true,

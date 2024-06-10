@@ -4,12 +4,12 @@
         <BackToTop />
         <!-- <PreloaderComponent /> -->
         <HeaderComponent />
-        <main>
+        <!-- <main>
             <BreadCrumbs />
-            <section class="product_details section_space pb-0">
-                <GoodContentComponent />
-            </section>
-        </main>
+            <section class="product_details section_space pb-0"> -->
+        <GoodContentComponent />
+            <!-- </section>
+        </main> -->
         <FooterComponent />
   </div>
 </template>
@@ -19,7 +19,6 @@
 import HeaderComponent from '@/components/Header/HeaderComponent.vue'
 import BackToTop from '@/components/BackToTop.vue'
 import FooterComponent from '@/components/Footer/FooterComponent.vue'
-import BreadCrumbs from '@/components/Good/GoodBreadCrumbs.vue'
 import GoodContentComponent from '@/components/Good/GoodContentComponent.vue'
 // import SideBarCartComponent from '@/components/SideBarCartComponent.vue'
 
@@ -30,10 +29,15 @@ export default {
         BackToTop,
         // PreloaderComponent,
         FooterComponent,
-        BreadCrumbs,
         GoodContentComponent,
         // SideBarCartComponent
-    }
+    },
+    mounted () {
+        window.scrollTo({
+            top: 200,
+            behavior: 'smooth'
+        })
+    },
 }
 </script>
 

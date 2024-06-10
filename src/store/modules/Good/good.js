@@ -3,15 +3,19 @@ import {backendPath} from "@/main.js"
 
 export default {
     state: {
-        good: [],
+        goodInfo: [],
+        goodsPrice: [],
 		good_info_loading: false,
     },
     getters: {
-        good: state => {
-            return state.good
+        goodInfo: state => {
+            return state.goodInfo
         },
         goodsName: state => {
-            return state.good.name
+            return state.goodInfo.name
+        },
+        goodsPrice: state => {
+            return state.goodsPrice
         },
         good_info_loading: state => {
             return state.good_info_loading
@@ -19,22 +23,26 @@ export default {
     },
     mutations: {
         loadGoodInfo (state, payload) {
-            state.good = payload
+            state.goodInfo = payload
+        },
+        loadGoodsPrice (state, payload) {
+            state.goodsPrice = payload
         },
         goodLoadingSwitch (state, payload) {
             state.good_info_loading = payload
         }
     },
     actions: {
-        async loadGoodInfo ({commit}, id) {
+        loadGoodInfo ({commit}, id) {
             let url = `${backendPath}/api/v1/catalog/good/?id=${id}`
             commit('goodLoadingSwitch', true)
-            await Axios.get(url)
+            Axios.get(url)
                 .then((response) => {
-                    commit('loadGoodInfo', response.data.data[0])
+                    commit('loadGoodInfo', response.data.data[0].good)
+                    commit('loadGoodsPrice', response.data.data[0].price)
                     setTimeout(()=>{
                         commit('goodLoadingSwitch', false)
-                    }, 300);
+                    }, 50);
                 })
                 .catch(function(error){
                     console.log(error)

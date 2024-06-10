@@ -6149,6 +6149,11 @@ hr {
   .calltoaction_section .item_content {
     margin: 30px auto 0;
   }
+  /* +as */
+  .header_bottom .as-cart {
+    padding: 15px;
+  }
+  /* -as */
   .header_section .header_bottom {
     position: static;
     padding-top: 10px;

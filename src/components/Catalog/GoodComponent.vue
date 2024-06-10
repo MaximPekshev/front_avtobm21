@@ -47,11 +47,11 @@ export default {
     data () {
         return {
             product_preview,
-            id: this.goodInfo.id,
-            name: this.goodInfo.name,
-            art: this.goodInfo.art,
-            price: this.goodInfo.price,
-            balance: Math.floor(this.goodInfo.balance),
+            id: this.goodInfo ? this.goodInfo.good.id : "",
+            name: this.goodInfo ? this.goodInfo.good.name : "",
+            art: this.goodInfo ? this.goodInfo.good.art : "",
+            price: this.goodInfo ? this.goodInfo.price : "",
+            balance: this.goodInfo ? Math.floor(this.goodInfo.balance): "",
             loading: false,
         }
     },
@@ -69,8 +69,8 @@ export default {
         },
         mainImage () {
             let path = ''
-            if (this.goodInfo.images.length > 0) {
-                path = backendPath + this.goodInfo.images[0].image.url
+            if (this.goodInfo.good.images.length > 0) {
+                path = backendPath + this.goodInfo.good.images[0].image.url
             }
             return path
         },
@@ -81,10 +81,10 @@ export default {
         },
         addToWishlist () {
             if (this.userToken != '') {
-                if (this.itemInWishlist(this.goodInfo.id)) {
-                    this.$store.dispatch('addDelWishlistItem', {good_id: this.goodInfo.id, authToken: this.userToken, action: 'del'})
+                if (this.itemInWishlist(this.id)) {
+                    this.$store.dispatch('addDelWishlistItem', {good_id: this.id, authToken: this.userToken, action: 'del'})
                 } else {
-                    this.$store.dispatch('addDelWishlistItem', {good_id: this.goodInfo.id, authToken: this.userToken, action: 'add'})
+                    this.$store.dispatch('addDelWishlistItem', {good_id: this.id, authToken: this.userToken, action: 'add'})
                 }
             }
         },
@@ -94,7 +94,7 @@ export default {
                 setTimeout(() => {
                     this.$store.dispatch('addDelCartItem', 
                     {
-                        good_id: this.goodInfo.id,
+                        good_id: this.id,
                         authToken: this.userToken,
                         quantity: 1,
                         action: 'add'
