@@ -35,14 +35,14 @@ import product_preview from '@/assets/images/product_img_12.png'
 
 export default {
     name: 'WishlistItemComponent',
-    props: ['goodInfo'],
+    props: ['goodInfo', 'goodsPrice'],
     data () {
         return {
             product_preview,
             id: this.goodInfo.id,
             name: this.goodInfo.name,
             art: this.goodInfo.art,
-            price: this.goodInfo.price,
+            price: this.goodsPrice,
             balance: Math.floor(this.goodInfo.balance),
             loading: false,
         }

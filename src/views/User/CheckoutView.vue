@@ -36,6 +36,7 @@
                             <tr v-for="item in cart" v-bind:key="item.id">
                                 <CheckoutItemComponentVue 
                                 :goodInfo="item.good"
+                                :goodsPrice="item.price"
                                 :quantity="Number(item.quantity)"
                                 >
                                 </CheckoutItemComponentVue>  

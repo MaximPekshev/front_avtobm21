@@ -95,7 +95,7 @@ export default {
             }
         },
         loadCurrentGoodsList(page) {
-            this.$store.dispatch('getGoodsListByCategory', {page: page, category_id: this.$route.params.id})
+            this.$store.dispatch('getGoodsList', {page: page, category_id: this.$route.params.id})
         },
         nextPage: function(el) {
             el.preventDefault()

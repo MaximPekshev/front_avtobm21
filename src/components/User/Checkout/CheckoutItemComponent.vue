@@ -17,13 +17,13 @@ import product_preview from '@/assets/images/product_img_12.png'
 
 export default {
     name: 'CartItemComponent',
-    props: ['goodInfo', 'quantity'],
+    props: ['goodInfo', 'goodsPrice', 'quantity'],
     data () {
         return {
             product_preview,
             id: this.goodInfo.id,
             name: this.goodInfo.name,
-            price: this.goodInfo.price,
+            price: this.goodsPrice,
             balance: this.goodInfo.balance,
         }
     },
@@ -32,7 +32,7 @@ export default {
             return this.$store.getters.user_token
         }, 
         amount () {
-            return (this.goodInfo.price*this.quantity).toFixed(2)
+            return (this.price*this.quantity).toFixed(2)
         },
         mainImage () {
             let path = ''

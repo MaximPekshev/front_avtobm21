@@ -103,8 +103,13 @@ import product_preview from '@/assets/images/product_img_12.png'
 import PreloaderComponent from '@/components/PreloaderComponent.vue'
 import BreadCrumbs from '@/components/Good/GoodBreadCrumbs.vue'
 
+import { useCookies } from "vue3-cookies"
 export default {
     name: 'GoodContentComponent',
+    setup() {
+        const { cookies } = useCookies()
+        return { cookies }
+    },
     data () {
         return {
             product_preview,
@@ -117,6 +122,9 @@ export default {
         BreadCrumbs,
     },
     computed: {
+        userToken () {
+            return this.$store.getters.user_token
+        },
         goodInfo () {
             return this.$store.getters.goodInfo
         },
@@ -138,9 +146,6 @@ export default {
             }
             return (applicabilities)
         },
-        userToken () {
-            return this.$store.getters.user_token
-        }, 
         goodInfoLoading () {
             return this.$store.getters.good_info_loading
         },
@@ -171,11 +176,17 @@ export default {
             document.title = payload
         },
         loadGoodInfo(id) {
-            this.$store.dispatch('loadGoodInfo', id)
+            let data = {
+                id: id
+            }
+            let authToken = this.cookies.get("avtobm21_token") 
+            if (authToken) {
+                data["authToken"] = authToken
+            } else if (this.userToken) {
+                data["authToken"] = this.userToken
+            }
+            this.$store.dispatch('loadGoodInfo', data)
         },
-        // getGoodInfo() {
-        //     return this.$store.getters.goodInfo
-        // },
         increaseQty() {
             this.qty ++
         },

@@ -134,8 +134,8 @@ export default {
                 cartItems.push({
                     "good_id": item.good.id,
                     "quantity": item.quantity,
-                    "price": item.good.price,
-                    "summ": (item.good.price*item.quantity).toFixed(2)
+                    "price": item.price,
+                    "summ": (item.price*item.quantity).toFixed(2)
                 })
             })
             let data = {

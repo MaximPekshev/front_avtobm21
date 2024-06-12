@@ -15,7 +15,7 @@ export default {
         },
         cartAmount: state => {
             if (state.cart.length > 0) {
-                return state.cart.reduce((acc,item) => acc += (item.quantity*item.good.price), 0)
+                return state.cart.reduce((acc,item) => acc += (item.quantity*item.price), 0)
             } else {
                 return 0
             }

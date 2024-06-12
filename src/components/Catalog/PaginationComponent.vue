@@ -15,6 +15,7 @@
         <ul v-else class="pagination_nav ul_li_right">
             <li v-if="currentPage > 3">
             <router-link v-if="q" :to="{ name: 'catalog', query: {q:q, page:1} }">1</router-link>
+            <router-link v-else-if="categoryId" :to="{ name: 'category', query: { page:1} }">1</router-link>
             <router-link v-else :to="{ name: 'catalog', query: { page:1} }">1</router-link>
             </li>
             <li 
@@ -22,12 +23,14 @@
                 v-bind:key="item.id" 
                 >
                 <router-link v-if="q" :to="{ name: 'catalog', query: {q:q, page:item} }">{{ item }}</router-link>
+                <router-link v-else-if="categoryId" :to="{ name: 'category', query: { page:item} }">{{ item }}</router-link>
                 <router-link v-else :to="{ name: 'catalog', query: { page:item} }">{{ item }}</router-link>
             </li>
             <li
                 class="active"
                 >
                 <router-link v-if="q" :to="{ name: 'catalog', query: {q:q, page:currentPage} }">{{ currentPage }}</router-link>
+                <router-link v-else-if="categoryId" :to="{ name: 'category', query: { page:currentPage} }">{{ currentPage }}</router-link>
                 <router-link v-else :to="{ name: 'catalog', query: { page:currentPage} }">{{ currentPage }}</router-link>
             </li>
             <li 
@@ -35,10 +38,12 @@
                 v-bind:key="item.id" 
                 >
                 <router-link v-if="q" :to="{ name: 'catalog', query: {q:q, page:item} }">{{ item }}</router-link>
+                <router-link v-else-if="categoryId" :to="{ name: 'category', query: { page:item} }">{{ item }}</router-link>
                 <router-link v-else :to="{ name: 'catalog', query: { page:item} }">{{ item }}</router-link>
             </li>
             <li v-if="(pageQty-currentPage) > 2">
                 <router-link v-if="q" :to="{ name: 'catalog', query: {q:q, page:pageQty} }">{{ pageQty }}</router-link>
+                <router-link v-else-if="categoryId" :to="{ name: 'category', query: { page:pageQty} }">{{ pageQty }}</router-link>
                 <router-link v-else :to="{ name: 'catalog', query: { page:pageQty} }">{{ pageQty }}</router-link>
             </li>
 
@@ -57,11 +62,25 @@
 </template>
 
 <script>
+import { useCookies } from "vue3-cookies"
 export default {
     name: 'PaginationComponent',
+    setup() {
+        const { cookies } = useCookies()
+        return { cookies }
+    },
     computed: {
+        userToken () {
+            return this.$store.getters.user_token
+        },
         q () {
             return this.$route.query.q
+        },
+        categoryId () {
+            if (this.$route.name == "category") {
+                return this.$route.params.id
+            }
+            return ""
         },
         goodsQty () {
             return this.getGoodsQty()
@@ -111,11 +130,22 @@ export default {
             }
         },
         loadCurrentGoodsList(page) {
+            let data = {
+                page: page
+            }
+            if (this.$route.name == "category") {
+                data["category_id"] = this.$route.params.id
+            }
             if (this.$route.query.q) {
-                this.$store.dispatch('getGoodsList', {q: this.$route.query.q, page: page})
-            } else {
-                this.$store.dispatch('getGoodsList', {page: page})
-            }    
+                data["q"] = this.$route.query.q
+            }
+            let authToken = this.cookies.get("avtobm21_token") 
+            if (authToken) {
+                data["authToken"] = authToken
+            } else if (this.userToken) {
+                data["authToken"] = this.userToken
+            }
+            this.$store.dispatch('getGoodsList', data)  
         },
         nextPage: function(el) {
             el.preventDefault()
@@ -123,8 +153,10 @@ export default {
                 if (!(this.currentPage == this.pageQty)) {
                     this.setCurrentPage(this.currentPage + 1)
                     this.loadCurrentGoodsList(this.currentPage)
-                    if (this.$route.query.q) {
-                        this.$router.push({ name: 'catalog', query: { q:this.$route.query.q, page:this.currentPage } })
+                    if (this.q) {
+                        this.$router.push({ name: 'catalog', query: { q:this.q, page:this.currentPage } })
+                    } else if (this.categoryId) {
+                        this.$router.push({ name: 'category', query: { page:this.currentPage } })
                     } else {
                         this.$router.push({ name: 'catalog', query: { page:this.currentPage } })
                     }
@@ -134,17 +166,17 @@ export default {
         previosPage: function(el) {
             el.preventDefault()
             if (this.goods_list_loading == false) {
-                if (!(this.currentPage == this.pageQty)) {
-                    if (this.currentPage > 1) {
-                        this.setCurrentPage(this.currentPage - 1)
-                    }
+                if (this.currentPage > 1) {
+                    this.setCurrentPage(this.currentPage - 1)
                     this.loadCurrentGoodsList(this.currentPage)
-                    if (this.$route.query.q) {
-                        this.$router.push({ name: 'catalog', query: { q:this.$route.query.q, page:this.currentPage } })
+                    if (this.q) {
+                        this.$router.push({ name: 'catalog', query: { q:this.q, page:this.currentPage } })
+                    } else if (this.categoryId) {
+                        this.$router.push({ name: 'category', query: { page:this.currentPage } })
                     } else {
                         this.$router.push({ name: 'catalog', query: { page:this.currentPage } })
                     }
-                }    
+                }
             }    
         },
     },

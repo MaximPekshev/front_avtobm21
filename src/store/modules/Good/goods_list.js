@@ -84,6 +84,11 @@ export default {
             let page = 1
             let goodsQtyOnPage = 28
             let q = ''
+            let category_id = ''
+            let authToken = ''
+            if (params.authToken) {
+                authToken = `Token ${params.authToken}`
+            }
             if (params.page) {
                 page = params.page
             }
@@ -93,16 +98,26 @@ export default {
             if (params.q) {
                 q = params.q
             }
+            if (params.category_id) {
+                category_id = params.category_id
+            }
             let url = `${backendPath}/api/v1/catalog/good`
             if (q) {
                 url = url + `/?search=${q}&page=${page}&count=${goodsQtyOnPage}`
+            } else if (category_id) {
+                url = url + `/?category_id=${category_id}&page=${page}&count=${goodsQtyOnPage}`
             } else {
                 url = url + `/?page=${page}&count=${goodsQtyOnPage}`
             }
             commit('setGoodsOnPageQty', goodsQtyOnPage)
             commit('goodsLoadingSwitch', true)
-            await Axios.get(url)
-                .then((response) => {
+            await Axios({
+                    method: 'get',
+                    headers: {
+                        "Authorization": authToken,
+                    },
+                    url: url,
+                }).then((response) => {
                     let page_qty = 1
                     if (response.data.count % goodsQtyOnPage > 0) {
                         page_qty = Math.floor(response.data.count/goodsQtyOnPage) + 1
@@ -144,73 +159,82 @@ export default {
                     commit('setAvailablePagesAfterCurrent', availablePagesAfterCurrent)
                     setTimeout(()=>{
                         commit('goodsLoadingSwitch', false)
-                    }, 300);
+                    }, 100);
                 })
                 .catch(function(error){
                     console.log(error);
                 });
         },
-        async getGoodsListByCategory ({commit}, params) {
-            let page = 1
-            let goodsQtyOnPage = 28
-            if (params.page) {
-                page = params.page
-            }
-            if (params.goodsQtyOnPage) {
-                goodsQtyOnPage = params.goodsQtyOnPage
-            }
-            commit('setGoodsOnPageQty', goodsQtyOnPage)
-            let url = `${backendPath}/api/v1/catalog/good`
-            url = url + `/?category_id=${params.category_id}&page=${page}&count=${goodsQtyOnPage}`
-            commit('goodsLoadingSwitch', true)
-            await Axios.get(url)
-                .then((response) => {
-                    let page_qty = 1
-                    if (response.data.count % goodsQtyOnPage > 0) {
-                        page_qty = Math.floor(response.data.count/28) + 1
-                    } else {
-                        page_qty = Math.floor(response.data.count/28)
-                    }
-                    commit('setPageQty', page_qty)
-                    commit('setCurrentPage', page)
-                    commit('setGoodsQty', response.data.count)
-                    commit('loadGoodsList', response.data.data)
-                    let availablePagesBeforeCurrent = []
-                    if (page <= 2) {
-                        for (let i = 1; i < page; i++) {
-                            availablePagesBeforeCurrent.push(i)
-                        }
-                    } else {
-                        for (let i = (page-2); i < page; i++) {
-                            availablePagesBeforeCurrent.push(i)
-                        }
-                    }
-                    availablePagesBeforeCurrent = availablePagesBeforeCurrent.sort(function(a, b) {
-                        return a - b;
-                    });
-                    commit('setAvailablePagesBeforeCurrent', availablePagesBeforeCurrent)
+        // async getGoodsListByCategory ({commit}, params) {
+        //     let page = 1
+        //     let goodsQtyOnPage = 28
+        //     let authToken = ''
+        //     if (params.authToken) {
+        //         authToken = `Token ${params.authToken}`
+        //     }
+        //     if (params.page) {
+        //         page = params.page
+        //     }
+        //     if (params.goodsQtyOnPage) {
+        //         goodsQtyOnPage = params.goodsQtyOnPage
+        //     }
+        //     commit('setGoodsOnPageQty', goodsQtyOnPage)
+        //     let url = `${backendPath}/api/v1/catalog/good`
+        //     url = url + `/?category_id=${params.category_id}&page=${page}&count=${goodsQtyOnPage}`
+        //     commit('goodsLoadingSwitch', true)
+        //     await Axios({
+        //             method: 'get',
+        //             headers: {
+        //                 "Authorization": authToken,
+        //             },
+        //             url: url,
+        //         }).then((response) => {
+        //             let page_qty = 1
+        //             if (response.data.count % goodsQtyOnPage > 0) {
+        //                 page_qty = Math.floor(response.data.count/28) + 1
+        //             } else {
+        //                 page_qty = Math.floor(response.data.count/28)
+        //             }
+        //             commit('setPageQty', page_qty)
+        //             commit('setCurrentPage', page)
+        //             commit('setGoodsQty', response.data.count)
+        //             commit('loadGoodsList', response.data.data)
+        //             let availablePagesBeforeCurrent = []
+        //             if (page <= 2) {
+        //                 for (let i = 1; i < page; i++) {
+        //                     availablePagesBeforeCurrent.push(i)
+        //                 }
+        //             } else {
+        //                 for (let i = (page-2); i < page; i++) {
+        //                     availablePagesBeforeCurrent.push(i)
+        //                 }
+        //             }
+        //             availablePagesBeforeCurrent = availablePagesBeforeCurrent.sort(function(a, b) {
+        //                 return a - b;
+        //             });
+        //             commit('setAvailablePagesBeforeCurrent', availablePagesBeforeCurrent)
 
-                    let availablePagesAfterCurrent = []
-                    if ((page_qty - page) <= 2) {
-                        for (let i = (page+1); i <= page_qty; i++) {
-                            availablePagesAfterCurrent.push(i)
-                        }
-                    } else {
-                        for (let i = (page+1); i < (page+3); i++) {
-                            availablePagesAfterCurrent.push(i)
-                        }
-                    }
-                    availablePagesAfterCurrent = availablePagesAfterCurrent.sort(function(a, b) {
-                        return a - b;
-                    });
-                    commit('setAvailablePagesAfterCurrent', availablePagesAfterCurrent)
-                    setTimeout(()=>{
-                        commit('goodsLoadingSwitch', false)
-                    }, 300);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
+        //             let availablePagesAfterCurrent = []
+        //             if ((page_qty - page) <= 2) {
+        //                 for (let i = (page+1); i <= page_qty; i++) {
+        //                     availablePagesAfterCurrent.push(i)
+        //                 }
+        //             } else {
+        //                 for (let i = (page+1); i < (page+3); i++) {
+        //                     availablePagesAfterCurrent.push(i)
+        //                 }
+        //             }
+        //             availablePagesAfterCurrent = availablePagesAfterCurrent.sort(function(a, b) {
+        //                 return a - b;
+        //             });
+        //             commit('setAvailablePagesAfterCurrent', availablePagesAfterCurrent)
+        //             setTimeout(()=>{
+        //                 commit('goodsLoadingSwitch', false)
+        //             }, 300);
+        //         })
+        //         .catch((error) => {
+        //             console.log(error);
+        //         });
+        // },
     }
 }

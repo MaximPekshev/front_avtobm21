@@ -27,6 +27,7 @@
                   <tr v-for="item in wishlist" v-bind:key="item.id">
                     <WishlistItemComponent
                       :goodInfo="item.good"
+                      :goodsPrice="item.price"
                     ></WishlistItemComponent>
                   </tr>  
                 </tbody>

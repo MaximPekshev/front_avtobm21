@@ -30,7 +30,7 @@
 <script>
 
 import GoodComponent from '@/components/Catalog/GoodComponent.vue'
-import PaginationComponent from '@/components/Category/PaginationComponent.vue'
+import PaginationComponent from '@/components/Catalog/PaginationComponent.vue'
 import ContentLoadingDemo from '@/components/Catalog/ContentLoadingDemo.vue'
 import PreloaderComponent from '@/components/PreloaderComponent.vue'
 

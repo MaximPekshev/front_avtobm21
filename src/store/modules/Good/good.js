@@ -33,11 +33,21 @@ export default {
         }
     },
     actions: {
-        loadGoodInfo ({commit}, id) {
+        async loadGoodInfo ({commit}, params) {
+            let id = params.id
+            let authToken = ''
+            if (params.authToken) {
+                authToken = `Token ${params.authToken}`
+            }
             let url = `${backendPath}/api/v1/catalog/good/?id=${id}`
             commit('goodLoadingSwitch', true)
-            Axios.get(url)
-                .then((response) => {
+            await Axios({
+                    method: 'get',
+                    headers: {
+                        "Authorization": authToken,
+                    },
+                    url: url,
+                }).then((response) => {
                     commit('loadGoodInfo', response.data.data[0].good)
                     commit('loadGoodsPrice', response.data.data[0].price)
                     setTimeout(()=>{

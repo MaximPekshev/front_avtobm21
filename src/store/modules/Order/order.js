@@ -12,7 +12,7 @@ export default {
         },
         orderAmount: state => {
             if (state.order.items.length > 0) {
-                return state.order.items.reduce((acc,item) => acc += (item.quantity*item.good.price), 0)
+                return state.order.items.reduce((acc,item) => acc += (item.quantity*item.price), 0)
             } else {
                 return 0
             }

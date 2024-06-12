@@ -27,6 +27,7 @@
                   <tr v-for="item in cart" v-bind:key="item.id">
                     <CartItemComponent 
                     :goodInfo="item.good"
+                    :goodsPrice="item.price"
                     :quantity="item.quantity"
                     :origQty="item.quantity"
                     >
