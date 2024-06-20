@@ -15,9 +15,11 @@
     "jquery-nice-select": "^1.1.0",
     "vue": "^3.2.13",
     "vue-3-fullscreen-image-directive-plugin": "^1.0.4",
+    "vue-multiselect": "^3.0.0",
     "vue-router": "^4.0.3",
     "vue3-carousel": "^0.3.3",
     "vue3-cookies": "^1.0.6",
+    "vue3-select-component": "^0.2.4",
     "vuex": "^4.0.0"
   },
   "devDependencies": {

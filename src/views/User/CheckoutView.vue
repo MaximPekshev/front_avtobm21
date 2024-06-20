@@ -5,19 +5,38 @@
         <HeaderComponent />
         <main>
           <DefaultBreadCrumbs pageName="Оформление заказа" />
-            <section class="checkout_section mt-4">
+            <section v-if="orderUploadedSeccus" class="checkout_section mt-4">
+                <div class="row justify-content-center">
+                <div class="col">
+                    <div class="team_section_title text-center">
+                        <h2 class="title_text mb-4">Заказ успешно размещен</h2>
+                        <router-link :to="{ name: 'catalog', query:{page:1}}" class="btn btn_primary m-2 p-3">В Каталог</router-link>
+                        <router-link :to="{ name: 'userOrderList'}" class="btn btn_primary m-2 p-3">Мои Заказы</router-link>
+                    </div>
+                </div>
+                </div>
+            </section>
+            <section v-else class="checkout_section mt-4">
                 <div class="container">
                     <div class="checkout_widget bg-light">
                         <h3 class="checkout_widget_title">Детали заказа</h3>
                         <div class="form_item">
                             <h4 class="input_title">Контрагент</h4>
-                            <input readonly type="text" :value="customer">
+                            <input readonly type="text" :value="actualCustomer">
                         </div>
                         <div class="select_option clearfix">
                             <h4 class="input_title">Договор</h4>
-                            <div class="nice-select" tabindex="0">
-                                <span v-if="contract" class="current">{{ contract.name }} {{ contract.number }} от {{ contract.date }}</span>
-                            </div>
+                            <VueSelect
+                                v-model="selectedContractId"
+                                :options="selectContracts"
+                                :isClearable="false"
+                                @option-selected="(option) => loadContracts(option.value)"
+                                placeholder="Выберите договор"
+                            >
+                                <template #option="{ option }">
+                                    {{ option.label }}
+                                </template>
+                            </VueSelect>
                         </div>
                     </div>
                     <div class="checkout_widget">
@@ -72,6 +91,10 @@ import DefaultBreadCrumbs from '@/components/DefaultBreadCrumbs.vue'
 import PreloaderComponent from '@/components/PreloaderComponent.vue'
 import CheckoutItemComponentVue from '@/components/User/Checkout/CheckoutItemComponent.vue'
 
+import { ref } from "vue";
+import "vue3-select-component/dist/style.css";
+import VueSelect from "vue3-select-component";
+
 export default {
   name: 'CheckoutView',
   setup() {
@@ -81,6 +104,8 @@ export default {
   data () {
     return {
         loading: false,
+        selectedContractId: ref(""),
+        orderUploadedSeccus: false
     }
   },  
   components: {
@@ -89,12 +114,10 @@ export default {
     FooterComponent,
     DefaultBreadCrumbs,
     PreloaderComponent,
-    CheckoutItemComponentVue
+    CheckoutItemComponentVue,
+    VueSelect
   },
   computed: {
-    user () {
-      return this.$store.getters.user
-    },
     userToken () {
         return this.$store.getters.user_token
     },
@@ -113,42 +136,60 @@ export default {
     contracts_loading () {
         return this.$store.getters.contracts_loading
     },
-    contract () {
-        return this.$store.getters.contracts[0]
+    selectContracts () {
+        let contracts = []
+        this.contracts.forEach(contract => {
+            contracts.push({
+                label: `${contract.name} ${contract.number} от ${contract.date}`,
+                value: contract.id
+            })
+        })
+        return contracts
     },
-    customer () {
-        if (this.contract) {
-            return `${this.contract.customer.name}, ИНН: ${this.contract.customer.inn}`
-        }
-        return ''
+    contracts () {
+        return this.$store.getters.contracts
+    },
+    actualCustomer () {
+        let actualCustomer = this.$store.getters.actualCustomer
+        return `${actualCustomer.name}, ИНН: ${actualCustomer.inn}`
+    },
+
+    actualContract () {
+        return this.$store.getters.actualContract
     }
   },
+  mounted() {
+    this.loadContracts()
+  },
   methods: {
-    loadOrdersList () {
-      let authToken = this.cookies.get("avtobm21_token") 
-      if (authToken) {
-          this.$store.dispatch('loadOrdersList', authToken)
-      } else if (this.userToken) {
-          this.$store.dispatch('loadOrdersList', this.userToken)
-      }
-    },
     placeAnOrder () {
-        if (this.contract && this.customer && this.cartQty > 0) {
+        if (this.selectedContractId && this.actualCustomer && this.cartQty > 0) {
             this.loading = true
-            setTimeout(() => {
-                this.$store.dispatch('placeAnOrder', 
-                {   
-                    contract_id: this.contract.id,
-                    cart: this.cart,
-                    authToken: this.userToken,
-                }).then(() => {
-                    this.loadOrdersList()
-                    this.$store.dispatch('deleteAllCartItems', this.userToken)
-                    this.$router.push({ name: 'userAccount' })
-                })
+            this.$store.dispatch('placeAnOrder', 
+            {   
+                contract_id: this.selectedContractId,
+                cart: this.cart,
+                authToken: this.userToken,
+            }).then(() => {
+                this.$store.dispatch('deleteAllCartItems', this.userToken)
+            }).finally(() => {
+                this.orderUploadedSeccus = true
                 this.loading = false
-            }, 100)
+            })
         }
+    },
+    loadContracts (id) {
+        let authToken = this.cookies.get("avtobm21_token") 
+        let data = {}
+        if (authToken) {
+            data.authToken = authToken
+        } else if (this.userToken) {
+            data.authToken = this.userToken
+        }
+        if (id) { data.id = id }
+        this.$store.dispatch('loadContracts', data).then (() => {
+            this.selectedContractId = ref(`${this.actualContract.id}`)
+        })
     }
   },
   watch: {
@@ -156,8 +197,19 @@ export default {
         immediate: true,
         handler() {
             document.title = 'Оформление заказа'
+            this.loadContracts()
         }
     },
   } 
 }
 </script>
+
+
+<style scoped>
+:deep(.vue-select) {
+    --vs-padding: 0.7rem 20px;
+    --vs-border: 1px solid #ededed;
+    --vs-border-radius: 3px;
+}
+
+</style>

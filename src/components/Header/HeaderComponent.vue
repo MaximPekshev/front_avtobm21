@@ -18,7 +18,6 @@
                     </button>
                   </li>
                   <li><router-link to="/contact"><i class="fa-regular fa-location-dot"></i></router-link></li>
-                  <!-- <li><router-link to="/compare"><i class="fa-solid fa-arrows-rotate"></i></router-link></li> -->
                   <li v-if="user">
                     <router-link :to="{ name: 'wishlist'}">
                       <i class="fa-regular fa-heart"></i>
@@ -37,7 +36,6 @@
           <div class="container">
             <div class="row align-items-center">
               <div class="col col-md-3 col-6">
-                <!-- <AllCategoriesDropdown /> -->
               </div>
               <div class="col col-md-6">
                 <SearchComponent />
@@ -57,7 +55,6 @@ import { useCookies } from "vue3-cookies"
 import HeaderTop from '@/components/Header/HeaderTop.vue'
 import LogoComponent from '@/components/Header/LogoComponent.vue'
 import MainMenuComponent from '@/components/Header/MainMenuComponent.vue'
-// import AllCategoriesDropdown from '@/components/Header/AllCategoriesDropdown.vue'
 import SearchComponent from '@/components/Header/SearchComponent.vue'
 import CartComponent from '@/components/Header/CartComponent.vue'
 
@@ -72,7 +69,6 @@ export default {
         HeaderTop,
         LogoComponent,
         MainMenuComponent,
-        // AllCategoriesDropdown,
         SearchComponent,
         CartComponent
     },
@@ -90,7 +86,6 @@ export default {
     mounted() {
       this.checkTheCookiesAuthToken()
       this.loadWishlist()
-      this.loadContracts()
     },
     methods: {
       checkTheCookiesAuthToken () {
@@ -108,14 +103,6 @@ export default {
           this.$store.dispatch('loadWishlist', this.userToken)
         }
       },
-      loadContracts () {
-        let authToken = this.cookies.get("avtobm21_token") 
-        if (authToken) {
-            this.$store.dispatch('loadContracts', authToken)
-        } else if (this.userToken) {
-            this.$store.dispatch('loadContracts', this.userToken)
-        }
-      }
     },
     watch: {
       userToken: {
@@ -136,7 +123,6 @@ export default {
           // this.cookies.set("avtobm21_token", "")
           if (this.cookies.get("avtobm21_token")) {
             this.loadWishlist()
-            this.loadContracts()
           }
         },
       }
